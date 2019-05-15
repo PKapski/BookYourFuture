@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <script th:src="@{webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+    <meta charset="UTF-8">
+    <title>User Registration</title>
+</head>
+<body>
+<div class="card bg-light">
+    <article class="card-body mx-auto" style="max-width: 700px;">
+        <h4 class="card-title mt-3 text-center">Create Account</h4>
+        <form action="#" th:action="@{/saveUser}" th:object="${user}" method="post">
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                </div>
+                <input name="name" th:field="*{name}" class="form-control" placeholder="Full name" type="text">
+            </div> <!-- form-group// -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                </div>
+                <input name="email" th:field="*{email}" class="form-control" placeholder="Email address" type="email">
+            </div> <!-- form-group// -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                </div>
+                <input name="" th:field="*{phoneNumber}" class="form-control" placeholder="Phone number" type="text">
+            </div> <!-- form-group// -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                </div>
+                <input th:field="*{password}" class="form-control" placeholder="Create password" type="password">
+            </div> <!-- form-group// -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                </div>
+                <input class="form-control" placeholder="Repeat password" type="password">
+            </div> <!-- form-group// -->
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block"> Create Account  </button>
+            </div> <!-- form-group// -->
+            <p class="text-center">Have an account? <a href="">Log In</a> </p>
+        </form>
+    </article>
+</div> <!-- card.// -->
+
+</div>
+</body>
+</html>
