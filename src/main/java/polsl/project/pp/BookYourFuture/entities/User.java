@@ -1,6 +1,7 @@
 package polsl.project.pp.BookYourFuture.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -26,6 +27,9 @@ public class User {
     @Column(name = "phone_num")
     private String phone;
 
+/*    @OneToMany(mappedBy = "user", cascade={CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    List<Timetable> timetable;*/
 
     public User(){
 

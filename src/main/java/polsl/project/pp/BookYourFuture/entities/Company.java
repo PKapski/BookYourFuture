@@ -1,6 +1,7 @@
 package polsl.project.pp.BookYourFuture.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 public class Company
 {
@@ -22,6 +23,10 @@ public class Company
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
     private User user;
+
+/*    @OneToMany(mappedBy = "company", cascade={CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    List<ServicesCategories> servicesCategories;*/
 
     public Company(){
 
