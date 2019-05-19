@@ -1,12 +1,11 @@
 package polsl.project.pp.BookYourFuture.entities;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.util.List;
-/*
+
 @Entity
 @Table (name = "services")
-public class Services {
+public class Service {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,17 +21,17 @@ public class Services {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "category_service_id")
-    private ServicesCategories servicesCategories;
+    private ServiceCategory servicesCategories;
 
-    @OneToMany(mappedBy = "services", cascade={CascadeType.PERSIST, CascadeType.MERGE,
+    @OneToMany(mappedBy = "service", cascade={CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
-    List<Timetable> timetable;
+    private List<Timetable> timetables;
 
-    public Services(){
+    public Service(){
 
     }
 
-    public Services(String name, int duration){
+    public Service(String name, int duration){
         this.name = name;
         this.duration = duration;
     }
@@ -44,12 +43,12 @@ public class Services {
     public int getDuration() {return duration;}
     public void setDuration(int duration) {this.duration = duration;}
 
-    public ServicesCategories getServicesCategories() {return servicesCategories;}
-    public void setServicesCategories(ServicesCategories servicesCategories) {this.servicesCategories = servicesCategories;}
+    public ServiceCategory getServicesCategories() {return servicesCategories;}
+    public void setServicesCategories(ServiceCategory servicesCategories) {this.servicesCategories = servicesCategories;}
 
     @Override
     public String toString(){
-        return "Services{" +
+        return "Service{" +
                 "id=" + id +
                 ", name=" + name+
                 ", servicesCategories=" + servicesCategories +"}";
@@ -58,4 +57,3 @@ public class Services {
 
 
 }
-*/

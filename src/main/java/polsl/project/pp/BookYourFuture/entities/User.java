@@ -27,9 +27,9 @@ public class User {
     @Column(name = "phone_num")
     private String phone;
 
-/*    @OneToMany(mappedBy = "user", cascade={CascadeType.PERSIST, CascadeType.MERGE,
+    @OneToMany(mappedBy = "user", cascade={CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
-    List<Timetable> timetable;*/
+    List<Timetable> timetables;
 
     public User(){
 

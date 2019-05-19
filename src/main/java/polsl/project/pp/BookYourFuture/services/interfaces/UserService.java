@@ -1,11 +1,10 @@
-package polsl.project.pp.BookYourFuture.dao;
+package polsl.project.pp.BookYourFuture.services.interfaces;
 
 import polsl.project.pp.BookYourFuture.entities.User;
 
 import java.util.List;
 
-public interface UserDAO {
-
+public interface UserService {
     public List<User> findAll();
 
     public User findById(int theId);

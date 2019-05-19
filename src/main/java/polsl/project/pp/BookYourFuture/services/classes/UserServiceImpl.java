@@ -1,14 +1,15 @@
-package polsl.project.pp.BookYourFuture.services;
+package polsl.project.pp.BookYourFuture.services.classes;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import polsl.project.pp.BookYourFuture.dao.UserDAO;
+import polsl.project.pp.BookYourFuture.dao.interfaces.UserDAO;
 import polsl.project.pp.BookYourFuture.entities.User;
+import polsl.project.pp.BookYourFuture.services.interfaces.UserService;
 
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private UserDAO userDAO;
 

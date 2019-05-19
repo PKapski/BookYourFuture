@@ -2,10 +2,10 @@ package polsl.project.pp.BookYourFuture.entities;
 
 import javax.persistence.*;
 import java.util.List;
-/*
+
 @Entity
 @Table (name = "services_categories")
-public class ServicesCategories {
+public class ServiceCategory {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id_service_category")
@@ -16,17 +16,17 @@ public class ServicesCategories {
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
-        @JoinColumn(name = "company_id")
+    @JoinColumn(name = "company_id")
     private Company company;
 
     @OneToMany(mappedBy = "servicesCategories", cascade={CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
-    List<Services> services;
+    List<Service> services;
 
-    public ServicesCategories(){
+    public ServiceCategory(){
 
     }
-    public ServicesCategories(String name){
+    public ServiceCategory(String name){
         this.name = name;
     }
 
@@ -46,4 +46,3 @@ public class ServicesCategories {
 
 
 }
-*/

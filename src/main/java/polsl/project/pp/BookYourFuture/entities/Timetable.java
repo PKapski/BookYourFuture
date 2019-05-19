@@ -3,7 +3,7 @@ package polsl.project.pp.BookYourFuture.entities;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
-/*
+
 @Entity
 @Table(name = "timetable")
 public class Timetable {
@@ -31,7 +31,7 @@ public class Timetable {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "service_id")
-    private Services services;
+    private Service service;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
@@ -69,8 +69,8 @@ public class Timetable {
     public String getDate() {return date;}
     public void setDate(String date) {this.date = date;}
 
-    public Services getServices() {return services;}
-    public void setServices(Services services) {this.services = services;}
+    public Service getServices() {return service;}
+    public void setServices(Service services) {this.service = services;}
 
     public User getUser() {return user;}
     public void setUser(User user) {this.user = user;}
@@ -84,7 +84,7 @@ public class Timetable {
                 "endHour=" + endHour +
                 "endMinute=" + endMinute+
                 "date=" + date +
-                "Services=" + services +
+                "Services=" + service +
                 "User=" + user + "}";
 
     }
@@ -93,4 +93,3 @@ public class Timetable {
 
 
 }
-*/

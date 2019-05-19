@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import polsl.project.pp.BookYourFuture.entities.User;
-import polsl.project.pp.BookYourFuture.services.UserService;
+import polsl.project.pp.BookYourFuture.services.interfaces.UserService;
 
 import java.security.Principal;
 

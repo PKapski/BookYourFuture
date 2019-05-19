@@ -3,6 +3,8 @@ package polsl.project.pp.BookYourFuture.entities;
 import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name ="companies")
 public class Company
 {
     @Id
@@ -24,9 +26,9 @@ public class Company
     @JoinColumn(name = "user_id")
     private User user;
 
-/*    @OneToMany(mappedBy = "company", cascade={CascadeType.PERSIST, CascadeType.MERGE,
+    @OneToMany(mappedBy = "company", cascade={CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
-    List<ServicesCategories> servicesCategories;*/
+    List<ServiceCategory> servicesCategories;
 
     public Company(){
 
