@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script th:src="@{webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+    <meta charset="UTF-8">
+    <title>Company Registration</title>
+</head>
+<body>
+
+<div class="card bg-light">
+    <article class="card-body mx-auto" style="max-width: 700px;">
+        <h4 class="card-title mt-3 text-center">Add company</h4>
+        <form action="#" th:action="@{/saveCompany}" th:object="${company}" method="post">
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                </div>
+                <input name="name" th:field="*{name}" class="form-control" placeholder="Name" type="text">
+            </div> <!-- form-group// -->
+
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-address-card-o"></i> </span>
+                </div>
+                <input name="address" th:field="*{address}" class="form-control" placeholder="Address" type="text">
+            </div> <!-- form-group// -->
+
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-address-book-o"></i></span>
+                </div>
+                <input name="nip" th:field="*{nip}" class="form-control" placeholder="Nip" type="text">
+            </div> <!-- form-group// -->
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block"> Add Company  </button>
+            </div> <!-- form-group// -->
+
+
+
+        </form>
+
+    </article>
+</div> <!-- card.// -->
+
+</div>
+</body>
+</html>

@@ -24,13 +24,13 @@ public class CompanyRestController {
 
     @GetMapping("/companies/findById")
     public Company findById(){
-        return companyService.findById(2);
+        return companyService.findById(3);
     }
 
 
     @GetMapping("companies/deleteById")
     public void deleteById(){
-        companyService.deleteById(1);
+        companyService.deleteById(2);
         System.out.println("DELETED");
     }
 }

@@ -29,6 +29,8 @@ CREATE TABLE `users` (
   `firstname` varchar(45) NOT NULL,
   `lastname` varchar(45) NOT NULL,
   `phone_num` varchar(45) NOT NULL,
+  `role` varchar(45) NOT NULL,
+
   PRIMARY KEY (`id_user`),
   UNIQUE KEY `phone_num_UNIQUE` (`phone_num`),
   UNIQUE KEY `login_UNIQUE` (`login`),
