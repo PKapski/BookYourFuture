@@ -9,7 +9,7 @@ public interface CompanyService {
 
     public Company findById(int theId);
 
-    public void save(Company theCompany);
+    public void save(Company theCompany, String theUsername);
 
     public void deleteById(int theId);
 }

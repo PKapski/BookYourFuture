@@ -6,9 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import polsl.project.pp.BookYourFuture.entities.User;
 import polsl.project.pp.BookYourFuture.entities.Company;
 import polsl.project.pp.BookYourFuture.services.interfaces.CompanyService;
@@ -65,16 +63,60 @@ public class UserController {
     @PostMapping("/saveCompany")
     public String saveCompany(@ModelAttribute("company")Company company){
 
-        //retrieve only user name :((((
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(authentication.getName());
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            String currentUserName = authentication.getName();
-            System.out.println(currentUserName + " ");
+            companyService.save(company,authentication.getName());
         }
 
-        User u = userService.findById(1);
-        company.setUser(u);
-        companyService.save(company);
+
         return "redirect:/";
     }
+
+    @GetMapping("/editAccount")
+    public String editAccount(Model model){
+
+/*        User u = null;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String currentLogin = authentication.getName();
+            u = userService.findByUsername(currentLogin);
+        }*/
+        model.addAttribute("user", new User());
+        return "editAccount";
+    }
+
+ /*   @PostMapping("/updateUser")
+    public String updateUser(@ModelAttribute("updateUser")User user){
+        user.setPassword("{noop}"+user.getPassword());
+        //userService.save(user);
+        System.out.println(user.getLogin());
+        System.out.println(user.getFirstName());
+        System.out.println(user.getLastName());
+        System.out.println(user.getPassword());
+
+        return "redirect:/";
+    }*/
+ //@RequestMapping(method = RequestMethod.POST, value = "/updateUser")
+ @PostMapping("/updateUser")
+ //@ResponseBody
+    //public String updateUser(@RequestBody User user, @PathVariable String id){
+     public String updateUser(
+             @RequestParam("phone") String phone,
+             @RequestParam("currentPassword") String currPass,
+             @RequestParam("password") String password,
+             @RequestParam("repeatPassword") String repeatPassword){
+
+     User user = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+     currPass = "{noop}" + currPass;
+     if (user.getPassword().equals(currPass) && password.equals(repeatPassword)) {
+         userService.updateUser(user, phone, password);
+         System.out.println("SAVED");
+     }
+     else {
+         System.out.println("jakis tam blad..."); // TO DO
+     }
+
+     return "redirect:/";
+ }
 }

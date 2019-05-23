@@ -6,7 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import polsl.project.pp.BookYourFuture.dao.interfaces.CompanyDAO;
+import polsl.project.pp.BookYourFuture.dao.interfaces.UserDAO;
 import polsl.project.pp.BookYourFuture.entities.Company;
+import polsl.project.pp.BookYourFuture.entities.User;
+import polsl.project.pp.BookYourFuture.services.classes.UserServiceImpl;
+import polsl.project.pp.BookYourFuture.services.interfaces.UserService;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -34,8 +38,11 @@ public class CompanyDAOImpl implements CompanyDAO {
     }
 
     @Override
-    public void save(Company theCompany) {
+    public void save(Company theCompany, String theUsername) {
         Session session = entityManager.unwrap(Session.class);
+        UserService userService = new UserServiceImpl(new UserDAOImpl(entityManager));
+        User user = userService.findByUsername(theUsername);
+        theCompany.setUser(user);
         session.save(theCompany);
 
     }
@@ -49,4 +56,5 @@ public class CompanyDAOImpl implements CompanyDAO {
         theQuery.executeUpdate();
 
     }
+
 }

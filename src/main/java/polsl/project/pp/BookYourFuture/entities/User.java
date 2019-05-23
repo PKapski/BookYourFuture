@@ -46,6 +46,10 @@ public class User {
         this.phone = phone;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getLogin() {
         return login;
     }
@@ -86,6 +90,10 @@ public class User {
         this.phone = phone;
     }
 
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -95,6 +103,7 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phone='" + phone + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }

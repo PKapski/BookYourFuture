@@ -3,6 +3,7 @@ package polsl.project.pp.BookYourFuture.dao.classes;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import polsl.project.pp.BookYourFuture.dao.interfaces.UserDAO;
@@ -46,7 +47,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void save(User theUser) {
         Session session = entityManager.unwrap(Session.class);
-
+        theUser.setRole("GUEST");
         session.save(theUser);
     }
 
@@ -60,5 +61,32 @@ public class UserDAOImpl implements UserDAO {
         theQuery.setParameter("userId", theId);
 
         theQuery.executeUpdate();
+    }
+
+    @Override
+    public User findByUsername(String theUsername){
+        Session session = entityManager.unwrap(Session.class);
+
+        Query<User> theQuery = session.createQuery("from User where login=:theUsername", User.class);
+
+        theQuery.setParameter("theUsername", theUsername);
+
+        User user = theQuery.getSingleResult();
+
+        return user;
+    }
+
+    @Override
+    @Transactional
+    public void updateUser(User theUser, String phone, String password){
+        Session session = entityManager.unwrap(Session.class);
+        int id_user = theUser.getId();
+        password = "{noop}" + password;
+        Query<User> theQuery = session.createQuery("update User SET phone=:phone, password=:password where id=:id_user");
+        theQuery.setParameter("phone", phone);
+        theQuery.setParameter("password", password);
+        theQuery.setParameter("id_user", id_user);
+        theQuery.executeUpdate();
+
     }
 }

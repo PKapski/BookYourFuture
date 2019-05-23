@@ -12,4 +12,9 @@ public interface UserService {
     public void save(User theUser);
 
     public void deleteById(int theId);
+
+    public User findByUsername(String theUsername);
+
+    public void updateUser(User theUser, String phone, String password);
+
 }

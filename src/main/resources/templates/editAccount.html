@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <script th:src="@{webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+    <meta charset="UTF-8">
+    <title>Edit Account</title>
+</head>
+<body>
+<div class="card bg-light">
+    <article class="card-body mx-auto" style="max-width: 700px;">
+        <h4 class="card-title mt-3 text-center">Edit Account</h4>
+        <form action="#" th:action="@{/updateUser}" th:object="${user}" method="post">
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                </div>
+                <input name="phone" th:field="*{phone}" class="form-control" placeholder="Phone number" type="text">
+            </div> <!-- form-group// -->
+
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                </div>
+                <input name="currentPassword" class="form-control" placeholder="Current password" type="password">
+            </div> <!-- form-group// -->
+
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                </div>
+                <input name="password" th:field="*{password}" class="form-control" placeholder="New password" type="password">
+            </div> <!-- form-group// -->
+
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                </div>
+                <input name = "repeatPassword" class="form-control" placeholder="Repeat new password" type="password">
+            </div> <!-- form-group// -->
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block"> Edit Account  </button>
+            </div> <!-- form-group// -->
+        </form>
+    </article>
+</div> <!-- card.// -->
+</body>
+</html>
