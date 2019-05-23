@@ -89,4 +89,27 @@ public class UserDAOImpl implements UserDAO {
         theQuery.executeUpdate();
 
     }
+
+    @Override
+    @Transactional
+    public void updateUserPhone(User theUser, String phone){
+        Session session = entityManager.unwrap(Session.class);
+        int id_user = theUser.getId();
+        Query<User> theQuery = session.createQuery("update User SET phone=:phone where id=:id_user");
+        theQuery.setParameter("phone", phone);
+        theQuery.setParameter("id_user", id_user);
+        theQuery.executeUpdate();
+    }
+
+    @Override
+    @Transactional
+    public void updateUserPass(User theUser, String password){
+        Session session = entityManager.unwrap(Session.class);
+        int id_user = theUser.getId();
+        password = "{noop}" + password;
+        Query<User> theQuery = session.createQuery("update User SET password=:password where id=:id_user");
+        theQuery.setParameter("password", password);
+        theQuery.setParameter("id_user", id_user);
+        theQuery.executeUpdate();
+    }
 }

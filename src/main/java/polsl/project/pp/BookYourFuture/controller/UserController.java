@@ -109,12 +109,22 @@ public class UserController {
 
      User user = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
      currPass = "{noop}" + currPass;
-     if (user.getPassword().equals(currPass) && password.equals(repeatPassword)) {
-         userService.updateUser(user, phone, password);
-         System.out.println("SAVED");
+     if(user.getPassword().equals(currPass)){
+         if ((password.equals("") || repeatPassword.equals(""))) {
+             userService.updateUserPhone(user, phone);
+             System.out.println("changed only phone");
+         }
+         else if (phone.equals("") && password.equals(repeatPassword)) {
+             userService.updateUserPass(user, password);
+             System.out.println("changed only password");
+         }
+         else if (password.equals(repeatPassword)) {
+             userService.updateUser(user, phone, password);
+             System.out.println("changed phone and password");
+         }
      }
      else {
-         System.out.println("jakis tam blad..."); // TO DO
+         System.out.println("Invalid password"); // TO DO
      }
 
      return "redirect:/";

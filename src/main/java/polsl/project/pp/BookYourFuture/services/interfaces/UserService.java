@@ -17,4 +17,8 @@ public interface UserService {
 
     public void updateUser(User theUser, String phone, String password);
 
+    public void updateUserPhone(User theUser,String phone);
+
+    public void updateUserPass(User theUser,String password);
+
 }
