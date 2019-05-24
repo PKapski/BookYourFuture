@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import polsl.project.pp.BookYourFuture.dao.interfaces.CompanyDAO;
 import polsl.project.pp.BookYourFuture.entities.Company;
+import polsl.project.pp.BookYourFuture.entities.User;
 import polsl.project.pp.BookYourFuture.services.interfaces.CompanyService;
 
 import java.util.List;
@@ -18,6 +19,8 @@ public class CompanyServiceImpl implements CompanyService {
     public List<Company> findAll() {
         return companyDAO.findAll();
     }
+    @Override
+    public List<Company> findAllByUser(User user){return companyDAO.findAllByUser(user); }
 
     @Override
     public Company findById(int theId) {

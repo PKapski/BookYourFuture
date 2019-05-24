@@ -65,6 +65,14 @@ public class UserController {
         model.addAttribute("company" , new Company());
         return "addCompany";
     }
+    @GetMapping("/myCompanies")
+    public String myCompanies(Model model){
+        // model.addAttribute("serviceCategory", new ServiceCategory());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user=userService.findByUsername(authentication.getName());
+        model.addAttribute("companiesList" , companyService.findAllByUser(user));
+        return "myCompanies";
+    }
 
     @PostMapping("/saveCompany")
     public String saveCompany(@ModelAttribute("company")Company company,@RequestParam("categoryName") String categoryName){

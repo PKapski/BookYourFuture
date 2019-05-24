@@ -7,6 +7,7 @@ import java.util.List;
 @Table(name ="companies")
 public class Company
 {
+
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id_company")
@@ -40,6 +41,9 @@ public class Company
         this.nip = nip;
         this.user = user;
     }
+    public int getId() {return id; }
+
+    public void setId(int id) { this.id = id;}
 
     public String getName() {
         return name;

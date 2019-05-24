@@ -8,6 +8,8 @@ import java.util.List;
 public interface CompanyDAO {
     public List<Company> findAll();
 
+    public List<Company> findAllByUser(User user);
+
     public Company findById(int theId);
 
     public void save(Company theCompany, String theUsername);
