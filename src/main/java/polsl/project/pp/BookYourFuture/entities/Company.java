@@ -29,6 +29,7 @@ public class Company
 
     @OneToMany(mappedBy = "company", cascade={CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
+            //cascade=CascadeType=ALL
     List<ServiceCategory> servicesCategories;
 
     public Company(){

@@ -65,7 +65,10 @@
                 <td th:text="${company.getName()}"></td>
                 <td th:text="${company.getAddress()}"></td>
                 <td th:text="${company.getNip()}"></td>
+                <td><a class="nav-link" href="/editCompany">Edit</a></td>
+                <td><a class="nav-link" th:href="@{/deleteCompany(id=${company.getId()})}">Delete</a></td>
             </tr>
+
         </table>
     </div>
 </div>

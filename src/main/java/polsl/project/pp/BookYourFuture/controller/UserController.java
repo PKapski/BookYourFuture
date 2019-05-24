@@ -107,7 +107,16 @@ public class UserController {
         model.addAttribute("user", new User());
         return "editAccount";
     }
-
+    @GetMapping("/deleteCompany")
+    public String deleteCompany(@RequestParam(name="id")int id){
+        System.out.println("ID: -----"+id);
+        companyService.deleteById(id);
+        return "redirect:/";
+    }
+    @GetMapping("/editCompany")
+    public String editCompany(){
+        return "editCompany";
+    }
  /*   @PostMapping("/updateUser")
     public String updateUser(@ModelAttribute("updateUser")User user){
         user.setPassword("{noop}"+user.getPassword());
