@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `services`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `services` (
   `id_service` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
+  `category_name` varchar(45) NOT NULL,
   `duration` int(11) NOT NULL,
   `category_service_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_service`),

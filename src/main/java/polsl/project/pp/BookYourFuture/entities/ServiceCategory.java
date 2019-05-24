@@ -12,7 +12,7 @@ public class ServiceCategory {
     private int id;
 
     @Column(name = "name")
-    private String name;
+    private String categoryName;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
@@ -27,20 +27,22 @@ public class ServiceCategory {
 
     }
     public ServiceCategory(String name){
-        this.name = name;
+        this.categoryName = name;
     }
 
-    public String getName(){return name;}
-    public void setName(String name) {this.name = name;}
+    public String getCategoryName(){return categoryName;}
+
+    public void setCategoryName(String name) {this.categoryName = name;}
 
     public Company getCompany(){return company;}
+
     public void setCompany(Company company) {this.company = company;}
 
     @Override
     public String toString(){
         return "ServicesCategories{" +
                 "id= " + id +
-                ", name=" + name +
+                ", name=" + categoryName +
                 ", company="+company+ "}";
     }
 

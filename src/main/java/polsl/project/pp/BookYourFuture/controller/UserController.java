@@ -7,9 +7,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import polsl.project.pp.BookYourFuture.entities.ServiceCategory;
 import polsl.project.pp.BookYourFuture.entities.User;
 import polsl.project.pp.BookYourFuture.entities.Company;
 import polsl.project.pp.BookYourFuture.services.interfaces.CompanyService;
+import polsl.project.pp.BookYourFuture.services.interfaces.ServiceCategoryService;
 import polsl.project.pp.BookYourFuture.services.interfaces.UserService;
 
 import java.security.Principal;
@@ -21,10 +23,13 @@ public class UserController {
 
     private CompanyService companyService;
 
+    private ServiceCategoryService serviceCategoryService;
+
     @Autowired
-    public UserController(UserService theUserService, CompanyService theCompanyService){
+    public UserController(UserService theUserService, CompanyService theCompanyService, ServiceCategoryService theServiceCategoryService){
         userService = theUserService;
         companyService = theCompanyService;
+        serviceCategoryService = theServiceCategoryService;
     }
 
     @GetMapping("/")
@@ -56,17 +61,26 @@ public class UserController {
 
     @GetMapping("/addCompany")
     public String addCompany(Model model){
+       // model.addAttribute("serviceCategory", new ServiceCategory());
         model.addAttribute("company" , new Company());
         return "addCompany";
     }
 
     @PostMapping("/saveCompany")
-    public String saveCompany(@ModelAttribute("company")Company company){
+    public String saveCompany(@ModelAttribute("company")Company company,@RequestParam("categoryName") String categoryName){
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println(authentication.getName());
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             companyService.save(company,authentication.getName());
+             ServiceCategory serviceCategory;// = serviceCategoryService.findByName(categoryName);
+//            if(serviceCategory==null){
+//                System.out.println("created serviceCategory");
+                serviceCategory = new ServiceCategory();
+                serviceCategory.setCategoryName(categoryName);
+                serviceCategory.setCompany(company);
+//            }
+            serviceCategoryService.save(serviceCategory);
         }
 
 

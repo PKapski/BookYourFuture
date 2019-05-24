@@ -9,6 +9,8 @@ public interface ServiceCategoryService {
 
     public ServiceCategory findById(int theId);
 
+    public ServiceCategory findByName(String categoryName);
+
     public void save(ServiceCategory theService);
 
     public void deleteById(int theId);

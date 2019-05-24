@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `companies`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `companies` (
   `id_company` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
+  `category_name` varchar(45) NOT NULL,
   `address` varchar(45) DEFAULT NULL,
   `nip` varchar(45) DEFAULT NULL,
   `user_id` int(11) NOT NULL,

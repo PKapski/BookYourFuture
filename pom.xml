@@ -11,7 +11,7 @@
 	<groupId>polsl.project.pp</groupId>
 	<artifactId>BookYourFuture</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>BookYourFuture</name>
+	<category_name>BookYourFuture</category_name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
