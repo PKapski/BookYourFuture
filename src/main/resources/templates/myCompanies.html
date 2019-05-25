@@ -12,7 +12,7 @@
     <title>My Companies</title>
 
 </head>
-<body>
+<div>
 <div class="jumbotron text-center" >
     <h1>BookYourFuture</h1>
 </div>
@@ -71,6 +71,17 @@
 
         </table>
     </div>
+</div>
+
+<div class="container">
+    <div  th:if="${#lists.isEmpty(companiesList)}">
+        <h2>You don't have any company</h2>
+        <div class="form-group">
+            <!--  <a href="/addCompany" class="btn btn-default">Add Company</a> // -->
+            <a href="/addCompany" class="btn btn-primary" role="button">Add Company</a>
+        </div> <!-- form-group// -->
+    </div>
+</div>
 </div>
 </body>
 </html>
