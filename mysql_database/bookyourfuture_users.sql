@@ -28,13 +28,14 @@ CREATE TABLE `users` (
   `password` varchar(45) DEFAULT NULL,
   `firstname` varchar(45) NOT NULL,
   `lastname` varchar(45) NOT NULL,
+  `email` varchar(60) NOT NULL,
   `phone_num` varchar(45) NOT NULL,
   `role` varchar(45) DEFAULT NULL,
 
   PRIMARY KEY (`id_user`),
   UNIQUE KEY `phone_num_UNIQUE` (`phone_num`),
   UNIQUE KEY `login_UNIQUE` (`login`),
-  UNIQUE KEY `password_UNIQUE` (`password`)
+  UNIQUE KEY `email_UNIQUE` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

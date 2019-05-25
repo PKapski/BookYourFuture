@@ -18,6 +18,11 @@ public class User {
     @Column(name = "password")
     private String password;
 
+
+
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "firstname")
     private String firstName;
 
@@ -38,12 +43,13 @@ public class User {
 
     }
 
-    public User(String login, String password, String firstName, String lastName, String phone) {
+    public User(String login, String password, String firstName, String lastName, String phone, String email) {
         this.login = login;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
+        this.email=email;
     }
 
     public int getId() {
@@ -82,6 +88,10 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getEmail() {return email; }
+
+    public void setEmail(String email) { this.email = email; }
+
     public String getPhone() {
         return phone;
     }
@@ -103,7 +113,9 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
                 ", role='" + role + '\'' +
+
                 '}';
     }
 }
