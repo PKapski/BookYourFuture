@@ -19,7 +19,6 @@ public class User {
     private String password;
 
 
-
     @Column(name = "email")
     private String email;
 
@@ -35,8 +34,9 @@ public class User {
     @Column(name = "role")
     private String role;
 
-    @OneToMany(mappedBy = "user", cascade={CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+/*    @OneToMany(mappedBy = "user", cascade={CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})*/
+    @OneToMany(mappedBy = "user", cascade={CascadeType.ALL})
     List<Timetable> timetables;
 
     public User(){

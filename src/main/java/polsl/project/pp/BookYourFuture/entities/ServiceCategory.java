@@ -19,8 +19,9 @@ public class ServiceCategory {
     @JoinColumn(name = "company_id")
     private Company company;
 
-    @OneToMany(mappedBy = "servicesCategories", cascade={CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+/*    @OneToMany(mappedBy = "servicesCategories", cascade={CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})*/
+    @OneToMany(mappedBy = "servicesCategories", cascade=CascadeType.ALL)
     List<Service> services;
 
     public ServiceCategory(){

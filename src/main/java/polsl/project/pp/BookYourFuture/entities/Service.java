@@ -23,8 +23,9 @@ public class Service {
     @JoinColumn(name = "category_service_id")
     private ServiceCategory servicesCategories;
 
-    @OneToMany(mappedBy = "service", cascade={CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+/*    @OneToMany(mappedBy = "service", cascade={CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})*/
+    @OneToMany(mappedBy = "service", cascade={CascadeType.ALL})
     private List<Timetable> timetables;
 
     public Service(){

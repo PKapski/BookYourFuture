@@ -24,15 +24,15 @@ DROP TABLE IF EXISTS `companies`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `companies` (
   `id_company` int(11) NOT NULL AUTO_INCREMENT,
-  `category_name` varchar(45) NOT NULL,
+  `name` varchar(45) NOT NULL,
   `address` varchar(45) DEFAULT NULL,
   `nip` varchar(45) DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id_company`),
   UNIQUE KEY `nip_UNIQUE` (`nip`),
   KEY `user_id_idx` (`user_id`),
-  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-15 16:41:38
+-- Dump completed on 2019-05-27 21:16:38

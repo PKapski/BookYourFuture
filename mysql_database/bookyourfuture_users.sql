@@ -31,12 +31,12 @@ CREATE TABLE `users` (
   `email` varchar(60) NOT NULL,
   `phone_num` varchar(45) NOT NULL,
   `role` varchar(45) DEFAULT NULL,
-
   PRIMARY KEY (`id_user`),
   UNIQUE KEY `phone_num_UNIQUE` (`phone_num`),
   UNIQUE KEY `login_UNIQUE` (`login`),
+  UNIQUE KEY `password_UNIQUE` (`password`)
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -57,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-15 16:41:39
+-- Dump completed on 2019-05-27 21:16:40
