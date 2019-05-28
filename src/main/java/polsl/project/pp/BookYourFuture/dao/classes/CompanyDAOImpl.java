@@ -32,7 +32,8 @@ public class CompanyDAOImpl implements CompanyDAO {
     @Override
     public List<Company> findAllByUser(User user){
         Session session = entityManager.unwrap(Session.class);
-        return session.createQuery("from Company C where C.user=:user").setParameter("user",user).getResultList();
+        return session.createQuery("from Company C where C.user=:user")
+                .setParameter("user",user).getResultList();
 
     }
     @Override

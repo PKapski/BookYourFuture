@@ -7,14 +7,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import polsl.project.pp.BookYourFuture.entities.Service;
 import polsl.project.pp.BookYourFuture.entities.ServiceCategory;
 import polsl.project.pp.BookYourFuture.entities.User;
 import polsl.project.pp.BookYourFuture.entities.Company;
 import polsl.project.pp.BookYourFuture.services.interfaces.CompanyService;
 import polsl.project.pp.BookYourFuture.services.interfaces.ServiceCategoryService;
+import polsl.project.pp.BookYourFuture.services.interfaces.ServiceService;
 import polsl.project.pp.BookYourFuture.services.interfaces.UserService;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -25,18 +28,21 @@ public class UserController {
 
     private ServiceCategoryService serviceCategoryService;
 
+    private ServiceService serviceService;
+
     @Autowired
-    public UserController(UserService theUserService, CompanyService theCompanyService, ServiceCategoryService theServiceCategoryService){
-        userService = theUserService;
-        companyService = theCompanyService;
-        serviceCategoryService = theServiceCategoryService;
+    public UserController(UserService userService, CompanyService companyService, ServiceCategoryService serviceCategoryService, ServiceService serviceService) {
+        this.userService = userService;
+        this.companyService = companyService;
+        this.serviceCategoryService = serviceCategoryService;
+        this.serviceService = serviceService;
     }
 
     @GetMapping("/")
     public String index(Model model, Principal principal){
-        //model.addAttribute("loggedInUser",principal);
         return "index";
     }
+
     @GetMapping("/registerUser")
     public String registerUser(Model model){
         model.addAttribute("user",new User());
@@ -81,12 +87,14 @@ public class UserController {
         System.out.println(authentication.getName());
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             companyService.save(company,authentication.getName());
+            System.out.println(authentication.getCredentials());
              ServiceCategory serviceCategory;// = serviceCategoryService.findByName(categoryName);
 //            if(serviceCategory==null){
 //                System.out.println("created serviceCategory");
                 serviceCategory = new ServiceCategory();
                 serviceCategory.setCategoryName(categoryName);
                 serviceCategory.setCompany(company);
+                company.addServiceCategory(serviceCategory);
 //            }
             serviceCategoryService.save(serviceCategory);
         }
@@ -160,4 +168,30 @@ public class UserController {
 
      return "redirect:/";
  }
+
+    @GetMapping("/addServicee")
+    public String addServicee(Model model, @RequestParam(name="id") int id){
+        model.addAttribute("service" , new Service());
+        model.addAttribute("company_id", id);
+        System.out.println("addService method " + id);
+        return "addService";
+    }
+
+    @PostMapping("/saveService")
+    public String saveService(@ModelAttribute("service")Service service, @RequestParam("company_id") String company_id){
+
+        if(service!=null)
+            System.out.println("Service is not null");
+        if(!company_id.equals(""))
+            System.out.println("company_id is not null");
+        int company_id_int = Integer.valueOf(company_id);
+        if(!service.getName().equals("") && service.getDuration()!=0){
+            Company company = companyService.findById(company_id_int);
+            List<ServiceCategory> serviceCategories = company.getServicesCategories();
+            service.setServicesCategories(serviceCategories.get(0));
+            serviceService.save(service);
+        }
+        System.out.println("saveService method " + company_id_int);
+        return "redirect:/myCompanies";
+    }
 }
