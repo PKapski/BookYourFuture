@@ -172,26 +172,25 @@ public class UserController {
     @GetMapping("/addServicee")
     public String addServicee(Model model, @RequestParam(name="id") int id){
         model.addAttribute("service" , new Service());
-        model.addAttribute("company_id", id);
+        model.addAttribute("company_id",id);
+      //  model.addAttribute("company_id", String.valueOf(id));
         System.out.println("addService method " + id);
         return "addService";
     }
 
     @PostMapping("/saveService")
-    public String saveService(@ModelAttribute("service")Service service, @RequestParam("company_id") String company_id){
+    public String saveService(@ModelAttribute("service")Service service, @RequestParam("id") int company_id){
 
         if(service!=null)
             System.out.println("Service is not null");
-        if(!company_id.equals(""))
-            System.out.println("company_id is not null");
-        int company_id_int = Integer.valueOf(company_id);
+        System.out.println("Company_id: " + company_id);
         if(!service.getName().equals("") && service.getDuration()!=0){
-            Company company = companyService.findById(company_id_int);
+            Company company = companyService.findById(company_id);
             List<ServiceCategory> serviceCategories = company.getServicesCategories();
             service.setServicesCategories(serviceCategories.get(0));
             serviceService.save(service);
         }
-        System.out.println("saveService method " + company_id_int);
+        System.out.println("saveService method " + company_id);
         return "redirect:/myCompanies";
     }
 }
