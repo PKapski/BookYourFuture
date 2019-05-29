@@ -40,6 +40,8 @@ public class UserController {
 
     @GetMapping("/")
     public String index(Model model, Principal principal){
+        String[] categories={"Haircut","Massage","Squash","Dentist","Mechanic","Engraver"};
+        model.addAttribute("categories" , categories);
         return "index";
     }
 
@@ -63,6 +65,14 @@ public class UserController {
     @GetMapping("/contact")
     public String contact(){
         return "contact";
+    }
+
+    @GetMapping("/choiceService")
+    public String choiceService(Model model, @RequestParam(name="category") String category, @RequestParam(name="categories") String[] categories){
+        //Model model, @RequestParam(name="category") String category
+        model.addAttribute("categories" , categories);
+        //System.out.println(category);
+        return "choiceService";
     }
 
     @GetMapping("/addCompany")

@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-     <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <title>BookYourFuture</title>
 
     <script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
@@ -34,14 +34,14 @@
             <a class="nav-link" href="/contact">Contact</a>
     </ul>
     <div sec:authorize="!isAuthenticated()">
-    <ul class="navbar-nav">
-        <li class="nav-item active">
-            <a class="nav-link" href="registerUser"><i class="fas fa-user"></i> Sign Up</a>
-        </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
-        </li>
-    </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="registerUser"><i class="fas fa-user"></i> Sign Up</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
+            </li>
+        </ul>
     </div>
     <div sec:authorize="isAuthenticated()">
         <ul class="navbar-nav">
@@ -71,7 +71,7 @@
             </div> -->
             <div>
                 <tr th:each="category: ${categories}">
-                <a class="nav-link list-group-item list-group-item-action" th:href="@{/choiceService(category=${category},categories=${categories})}" ><td th:text="${category}"></td></a>
+                    <a class="nav-link list-group-item list-group-item-action" th:href="@{/choiceService(category=${category},categories=${categories})}" ><td th:text="${category}"></td></a>
             </div>
 
         </div>
