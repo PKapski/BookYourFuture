@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-ng-app="category" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
 <head>
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">-->
     <link rel="stylesheet" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -63,16 +64,40 @@
         <div class="container">
             <h2>Categories:</h2>
             <div class="form-group">
-                <input type="text" class="form-control" id="search" placeholder="Search..." data-ng-model="search"/>
+
+                <input type="text" class="form-control" id="search" onkeyup="myFunction()" placeholder="Search..." >
+
+                <!-- <input type="text" id="search" onkeyup="myFunction()" placeholder="Search">-->
+                <!-- <input type="text" class="form-control" id="search" placeholder="Search..." data-ng-model="search"/> -->
             </div>
             <!--<div class="list-group" data-ng-repeat="item in data | filter:search">
 
                 <a class="nav-link list-group-item list-group-item-action" th:href="@{/choiceService(category=${item})}" >{{item}}</a>
             </div> -->
             <div>
-                <tr th:each="category: ${categories}">
-                    <a class="nav-link list-group-item list-group-item-action" th:href="@{/choiceService(category=${category},categories=${categories})}" ><td th:text="${category}"></td></a>
+                <dl id="myDL">
+                    <tr th:each="category: ${categories} ">
+                        <ld><a class="nav-link list-group-item list-group-item-action" th:href="@{/choiceService(category=${category},categories=${categories})}" ><td th:text="${category}"></td></a></ld>
+                </dl>
             </div>
+            <script>
+                function myFunction() {
+                    var input, filter, ul, li, a, i, txtValue;
+                    input = document.getElementById("search");
+                    filter = input.value.toUpperCase();
+                    ul = document.getElementById("myDL");
+                    li = ul.getElementsByTagName("ld");
+                    for (i = 0; i < li.length; i++) {
+                        a = li[i].getElementsByTagName("a")[0];
+                        txtValue = a.textContent || a.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            li[i].style.display = "";
+                        } else {
+                            li[i].style.display = "none";
+                        }
+                    }
+                }
+            </script>
 
         </div>
     </div>
