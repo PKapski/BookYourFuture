@@ -1,5 +1,6 @@
 package polsl.project.pp.BookYourFuture.dao.classes;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -140,12 +141,12 @@ public class UserDAOImpl implements UserDAO {
     }
     @Override
     public boolean hasEmptyValues(User user){
-        if (user.getFirstName().isEmpty()||
-                user.getLastName().isEmpty()||
-                user.getLogin().isEmpty()||
-                user.getPhone().isEmpty()||
-                user.getPassword().isEmpty()||
-                user.getEmail().isEmpty())
+        if (StringUtils.isBlank(user.getFirstName())||
+                StringUtils.isBlank(user.getLastName())||
+                StringUtils.isBlank(user.getLogin())||
+                StringUtils.isBlank( user.getPhone())||
+                StringUtils.isBlank( user.getPassword())||
+                StringUtils.isBlank(user.getEmail()))
             return true;
         return false;
 
