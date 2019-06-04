@@ -34,8 +34,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id_user`),
   UNIQUE KEY `phone_num_UNIQUE` (`phone_num`),
   UNIQUE KEY `email_UNIQUE` (`email`),
-  UNIQUE KEY `login_UNIQUE` (`login`),
-  UNIQUE KEY `password_UNIQUE` (`password`)
+  UNIQUE KEY `login_UNIQUE` (`login`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

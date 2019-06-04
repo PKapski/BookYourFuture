@@ -21,4 +21,8 @@ public interface UserService {
 
     public void updateUserPass(User theUser,String password);
 
+    public User findByEmail(String email);
+
+    public User findByPhone(String phone);
+
 }

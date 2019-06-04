@@ -54,4 +54,10 @@ public class UserServiceImpl implements UserService {
     public void updateUserPass(User theUser, String password) {
         userDAO.updateUserPass(theUser, password);
     }
+
+    @Override
+    public User findByEmail(String email){return userDAO.findByEmail(email);}
+
+    @Override
+    public User findByPhone(String phone){return userDAO.findByPhone(phone);}
 }

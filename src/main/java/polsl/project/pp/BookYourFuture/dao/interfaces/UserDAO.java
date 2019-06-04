@@ -16,6 +16,10 @@ public interface UserDAO {
 
     public User findByUsername(String theUsername);
 
+    public User findByEmail(String email);
+
+    public User findByPhone(String phone);
+
     public void updateUser(User theUser, String phone, String password);
 
     public void updateUserPhone(User theUser,String phone);

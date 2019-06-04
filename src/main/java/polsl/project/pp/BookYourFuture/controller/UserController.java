@@ -1,5 +1,6 @@
 package polsl.project.pp.BookYourFuture.controller;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -48,15 +49,31 @@ public class UserController {
     @GetMapping("/registerUser")
     public String registerUser(Model model){
         model.addAttribute("user",new User());
+        model.addAttribute("errorText","");
         return "registerUser";
     }
     @PostMapping("/saveUser")
-    public String saveUser(@ModelAttribute("user")User user){
-        user.setPassword("{noop}"+user.getPassword());
-        userService.save(user);
-        System.out.println(user.getLogin());
-
-        return "redirect:/";
+    public String saveUser(@ModelAttribute("user")User user, @RequestParam(name="password2") String password2, Model model){
+        if (!user.getPassword().equals(password2)) {
+             model.addAttribute("errorText", "Passwords are not equal!");
+        } else if (userService.findByUsername(user.getLogin())!=null){
+                model.addAttribute("errorText","User with this login already exists!");
+        }
+        else if (userService.findByEmail(user.getEmail())!=null){
+                model.addAttribute("errorText","User with this email already exists!");
+        }
+        else if (userService.findByPhone(user.getPhone())!=null){
+            model.addAttribute("errorText","User with this phone number already exists!");
+        }
+        else if(!NumberUtils.isDigits(user.getPhone()) || user.getPhone().length()!=9){
+            model.addAttribute("errorText","Phone number is incorrect!");
+        }
+        else {
+            user.setPassword("{noop}" + user.getPassword());
+            userService.save(user);
+            return "redirect:/";
+        }
+        return "registerUser";
     }
     @GetMapping("/aboutUs")
     public String aboutUs(){

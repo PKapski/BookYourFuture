@@ -31,14 +31,14 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
                 </div>
-                <input name="phoneNumber" th:field="*{phone}" class="form-control" placeholder="Phone number" type="text">
+                <input name="phoneNumber" th:field="*{phone}" class="form-control" placeholder="Phone number" type="tel">
             </div> <!-- form-group// -->
 
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                 </div>
-                <input name="email" th:field="*{email}" class="form-control" placeholder="Email" type="text">
+                <input name="email" th:field="*{email}" class="form-control" placeholder="Email" type="email">
             </div> <!-- form-group// -->
 
             <div class="form-group input-group">
@@ -59,12 +59,13 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                 </div>
-                <input class="form-control" placeholder="Repeat password" type="password">
+                <input  name="password2" class="form-control" placeholder="Repeat password" type="password">
             </div> <!-- form-group// -->
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block"> Create Account  </button>
             </div> <!-- form-group// -->
             <p class="text-center">Have an account? <a href="/login">Log In</a> </p>
+            <p class="text-center text-danger" ><a th:text="${errorText}"></a></p>
         </form>
     </article>
 </div> <!-- card.// -->

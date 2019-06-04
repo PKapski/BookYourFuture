@@ -70,12 +70,38 @@ public class UserDAOImpl implements UserDAO {
         Query<User> theQuery = session.createQuery("from User where login=:theUsername", User.class);
 
         theQuery.setParameter("theUsername", theUsername);
+        try {
+            User user = theQuery.getSingleResult();
+            return user;
+        }catch(Exception e){return null;}
 
-        User user = theQuery.getSingleResult();
-
-        return user;
     }
+    @Override
+    public User findByEmail(String email){
+        Session session = entityManager.unwrap(Session.class);
 
+        Query<User> theQuery = session.createQuery("from User where email=:email", User.class);
+
+        theQuery.setParameter("email", email);
+
+        try {
+            User user = theQuery.getSingleResult();
+            return user;
+        }catch(Exception e){return null;}
+    }
+    @Override
+    public User findByPhone(String phone){
+        Session session = entityManager.unwrap(Session.class);
+
+        Query<User> theQuery = session.createQuery("from User where phone=:phone", User.class);
+
+        theQuery.setParameter("phone", phone);
+
+        try {
+            User user = theQuery.getSingleResult();
+            return user;
+        }catch(Exception e){return null;}
+    }
     @Override
     @Transactional
     public void updateUser(User theUser, String phone, String password){
