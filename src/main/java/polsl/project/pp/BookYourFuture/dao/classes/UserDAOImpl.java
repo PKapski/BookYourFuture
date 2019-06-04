@@ -138,4 +138,16 @@ public class UserDAOImpl implements UserDAO {
         theQuery.setParameter("id_user", id_user);
         theQuery.executeUpdate();
     }
+    @Override
+    public boolean hasEmptyValues(User user){
+        if (user.getFirstName().isEmpty()||
+                user.getLastName().isEmpty()||
+                user.getLogin().isEmpty()||
+                user.getPhone().isEmpty()||
+                user.getPassword().isEmpty()||
+                user.getEmail().isEmpty())
+            return true;
+        return false;
+
+    }
 }

@@ -25,4 +25,6 @@ public interface UserService {
 
     public User findByPhone(String phone);
 
+    public boolean hasEmptyValues(User user);
+
 }

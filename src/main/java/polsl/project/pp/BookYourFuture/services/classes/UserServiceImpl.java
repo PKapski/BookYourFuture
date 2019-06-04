@@ -60,4 +60,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByPhone(String phone){return userDAO.findByPhone(phone);}
+
+    @Override
+    public boolean hasEmptyValues(User user){return userDAO.hasEmptyValues(user);}
 }

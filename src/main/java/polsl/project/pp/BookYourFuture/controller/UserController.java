@@ -68,6 +68,9 @@ public class UserController {
         else if(!NumberUtils.isDigits(user.getPhone()) || user.getPhone().length()!=9){
             model.addAttribute("errorText","Phone number is incorrect!");
         }
+        else if (userService.hasEmptyValues(user)){
+            model.addAttribute("errorText","All fields must be filled!");
+        }
         else {
             user.setPassword("{noop}" + user.getPassword());
             userService.save(user);

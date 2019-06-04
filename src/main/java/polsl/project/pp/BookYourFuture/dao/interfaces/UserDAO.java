@@ -25,4 +25,6 @@ public interface UserDAO {
     public void updateUserPhone(User theUser,String phone);
 
     public void updateUserPass(User theUser,String password);
+
+    public boolean hasEmptyValues(User user);
 }
