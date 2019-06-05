@@ -24,10 +24,8 @@ DROP TABLE IF EXISTS `timetable`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `timetable` (
   `id_timetable` int(11) NOT NULL AUTO_INCREMENT,
-  `start_hour` int(11) DEFAULT NULL,
-  `start_minute` int(11) DEFAULT NULL,
-  `end_hour` int(11) DEFAULT NULL,
-  `end_minute` int(11) DEFAULT NULL,
+  `start_time` time(0) DEFAULT NULL,
+  `end_time` time(0) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `service_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,

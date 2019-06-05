@@ -115,8 +115,8 @@
                         <th>Address</th>
                     </tr>
                     <tr th:each="timetable: ${timetableList}">
-                        <td th:text="${timetable.getStartHour()+':'+ timetable.getStartMinute()}"></td>
-                        <td th:text="${timetable.getEndHour()+':'+ timetable.getEndMinute()}"></td>
+                        <td th:text="${timetable.getStartTime()}"></td>
+                        <td th:text="${timetable.getEndTime()}"></td>
                         <td th:text="${timetable.getDate()}"></td>
                         <td th:text="${timetable.getServices().getName()}"></td>
                         <td th:text="${timetable.getServices().getServicesCategories().getCompany().getName()}"></td>

@@ -27,6 +27,8 @@ CREATE TABLE `companies` (
   `name` varchar(45) NOT NULL,
   `address` varchar(45) DEFAULT NULL,
   `nip` varchar(45) DEFAULT NULL,
+  open_time time(0) DEFAULT NULL,
+  close_time time(0) DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id_company`),
   UNIQUE KEY `nip_UNIQUE` (`nip`),

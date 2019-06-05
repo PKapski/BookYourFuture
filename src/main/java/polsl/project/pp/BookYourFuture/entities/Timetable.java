@@ -13,17 +13,11 @@ public class Timetable {
     @Column(name = "id_timetable")
     private int id;
 
-    @Column(name = "start_hour")
-    private int startHour;
+    @Column(name = "start_time")
+    private String startTime;
 
-    @Column(name = "start_minute")
-    private int startMinute;
-
-    @Column(name ="end_hour")
-    private int endHour;
-
-    @Column(name = "end_minute")
-    private int endMinute;
+    @Column(name ="end_time")
+    private String endTime;
 
     @Column(name = "date")
     private String date;
@@ -42,11 +36,9 @@ public class Timetable {
 
     }
 
-    public Timetable(int startHour, int startMinute, int endHour, int endMinute, String date){
-        this.startHour = startHour;
-        this.startMinute = startMinute;
-        this.endHour = endHour;
-        this.endMinute = endMinute;
+    public Timetable(String startTime,String endTime,  String date){
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.date = date;
 
     }
@@ -54,17 +46,11 @@ public class Timetable {
     public int getId(){return id;}
     public void setId(int id) {this.id = id;}
 
-    public int getStartHour() {return startHour;}
-    public void setStartHour(int startHour) {this.startHour = startHour;}
+    public String getStartTime() {return startTime;}
+    public void setStartTime(String startTime) {this.startTime = startTime;}
 
-    public int getStartMinute() {return startMinute;}
-    public void setStartMinute(int startMinute) {this.startMinute = startMinute;}
-
-    public int getEndHour(){return endHour;}
-    public void setEndHour(int endHour) {this.endHour = endHour;}
-
-    public int getEndMinute(){return endMinute;}
-    public void setEndMinute(int endMinute) {this.endMinute = endMinute;}
+    public String getEndTime(){return endTime;}
+    public void setEndTime(String endTime) {this.endTime = endTime;}
 
     public String getDate() {return date;}
     public void setDate(String date) {this.date = date;}
@@ -79,10 +65,8 @@ public class Timetable {
     public String toString(){
         return "Timetable{" +
                 "id=" + id +
-                "startHour=" + startHour +
-                "startMinute=" + startMinute +
-                "endHour=" + endHour +
-                "endMinute=" + endMinute+
+                "startTime=" + startTime +
+                "endTime=" + endTime +
                 "date=" + date +
                 "Services=" + service +
                 "User=" + user + "}";

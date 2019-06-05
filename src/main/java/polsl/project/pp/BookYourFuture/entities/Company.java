@@ -23,6 +23,12 @@ public class Company
     @Column(name = "nip")
     private String nip;
 
+    @Column(name = "open_time")
+    private String openTime;
+
+    @Column(name = "close_time")
+    private String closeTime;
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
@@ -37,10 +43,12 @@ public class Company
 
     }
 
-    public Company(String name, String address, String nip, User user) {
+    public Company(String name, String address, String nip,String openTime,String closeTime, User user) {
         this.name = name;
         this.address = address;
         this.nip = nip;
+        this.openTime = openTime;
+        this.closeTime = closeTime;
         this.user = user;
     }
     public int getId() {return id; }
@@ -69,6 +77,22 @@ public class Company
 
     public void setNip(String nip) {
         this.nip = nip;
+    }
+
+    public String getOpenTime() {
+        return openTime;
+    }
+
+    public void setOpenTime(String openTime) {
+        this.openTime = openTime;
+    }
+
+    public String getCloseTime() {
+        return closeTime;
+    }
+
+    public void setCloseTime(String closeTime) {
+        this.closeTime = closeTime;
     }
 
     public User getUser() {
