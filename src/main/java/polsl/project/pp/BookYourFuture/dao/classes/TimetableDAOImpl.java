@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import polsl.project.pp.BookYourFuture.dao.interfaces.TimetableDAO;
+import polsl.project.pp.BookYourFuture.entities.Service;
 import polsl.project.pp.BookYourFuture.entities.Timetable;
 
 import javax.persistence.EntityManager;
@@ -56,5 +57,11 @@ public class TimetableDAOImpl implements TimetableDAO {
         Timetable theTimetable = session.get(Timetable.class, theId);
 
         return theTimetable;
+    }
+    public List<Timetable> findByService(Service service) {
+        Session session = entityManager.unwrap(Session.class);
+        return session.createQuery("from Timetable where service=:service")
+                .setParameter("service",service).getResultList();
+
     }
 }

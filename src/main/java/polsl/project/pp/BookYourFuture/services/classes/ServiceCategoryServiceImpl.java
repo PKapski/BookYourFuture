@@ -26,7 +26,7 @@ public class ServiceCategoryServiceImpl implements ServiceCategoryService {
     }
 
     @Override
-    public ServiceCategory findByName(String categoryName) {
+    public List<ServiceCategory> findByName(String categoryName) {
         return serviceCategoryDAO.findByName(categoryName);
     }
 

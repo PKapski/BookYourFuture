@@ -37,6 +37,9 @@ public class Service {
         this.duration = duration;
     }
 
+    public int getId() {
+        return id;
+    }
 
     public String getName() {return  name;}
 

@@ -9,6 +9,8 @@ import polsl.project.pp.BookYourFuture.entities.Service;
 
 import javax.persistence.EntityManager;
 import org.hibernate.Query;
+import polsl.project.pp.BookYourFuture.entities.ServiceCategory;
+
 import java.util.List;
 
 @Repository
@@ -35,6 +37,13 @@ public class ServiceDAOImpl implements ServiceDAO {
         Session session = entityManager.unwrap(Session.class);
         Service service = session.get(Service.class, theId);
         return service;
+    }
+
+    @Override
+    public List<Service> findByCatSerId(ServiceCategory theId) {
+        Session session = entityManager.unwrap(Session.class);
+        return session.createQuery("from Service where servicesCategories=:theId")
+                .setParameter("theId",theId).getResultList();
     }
 
     @Override

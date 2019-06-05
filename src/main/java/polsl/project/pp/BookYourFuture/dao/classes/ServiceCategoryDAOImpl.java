@@ -43,14 +43,14 @@ public class ServiceCategoryDAOImpl implements ServiceCategoryDAO {
 
     @Override
     @Transactional
-    public ServiceCategory findByName(String categoryName) {
+    public List <ServiceCategory> findByName(String categoryName) {
         Session session = entityManager.unwrap(Session.class);
 
         Query<ServiceCategory> theQuery = session.createQuery("from ServiceCategory where categoryName=:theCategoryName");
 
         theQuery.setParameter("theCategoryName", categoryName);
 
-        return theQuery.getSingleResult();
+        return theQuery.getResultList();
 
     }
 

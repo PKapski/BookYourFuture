@@ -27,6 +27,11 @@ public class TimetableServiceImpl implements TimetableService {
     }
 
     @Override
+    public List<Timetable> findByService(polsl.project.pp.BookYourFuture.entities.Service service) {
+        return timetableDAO.findByService(service);
+    }
+
+    @Override
     public void save(Timetable theTimetable) {
         timetableDAO.save(theTimetable);
     }

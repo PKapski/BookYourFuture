@@ -101,6 +101,33 @@
 
         </div>
     </div>
+    <div class="col-lg-10">
+        <div class="container">
+            <div th:if="${not #lists.isEmpty(timetableList)}">
+                <h2>Available services:</h2>
+                <table class="table table-striped">
+                    <tr>
+                        <th>Start time</th>
+                        <th>End time</th>
+                        <th>Date</th>
+                        <th>Name services</th>
+                        <th>Company name</th>
+                        <th>Address</th>
+                    </tr>
+                    <tr th:each="timetable: ${timetableList}">
+                        <td th:text="${timetable.getStartHour()+':'+ timetable.getStartMinute()}"></td>
+                        <td th:text="${timetable.getEndHour()+':'+ timetable.getEndMinute()}"></td>
+                        <td th:text="${timetable.getDate()}"></td>
+                        <td th:text="${timetable.getServices().getName()}"></td>
+                        <td th:text="${timetable.getServices().getServicesCategories().getCompany().getName()}"></td>
+                        <td th:text="${timetable.getServices().getServicesCategories().getCompany().getAddress()}"></td>
+                        <td><a class="nav-link" href="/editCompany">Book</a></td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 

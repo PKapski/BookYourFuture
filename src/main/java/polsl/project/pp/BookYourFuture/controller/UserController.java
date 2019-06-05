@@ -8,16 +8,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import polsl.project.pp.BookYourFuture.entities.Service;
-import polsl.project.pp.BookYourFuture.entities.ServiceCategory;
-import polsl.project.pp.BookYourFuture.entities.User;
-import polsl.project.pp.BookYourFuture.entities.Company;
-import polsl.project.pp.BookYourFuture.services.interfaces.CompanyService;
-import polsl.project.pp.BookYourFuture.services.interfaces.ServiceCategoryService;
-import polsl.project.pp.BookYourFuture.services.interfaces.ServiceService;
-import polsl.project.pp.BookYourFuture.services.interfaces.UserService;
+import polsl.project.pp.BookYourFuture.entities.*;
+import polsl.project.pp.BookYourFuture.services.interfaces.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -31,12 +26,15 @@ public class UserController {
 
     private ServiceService serviceService;
 
+    private TimetableService timetableService;
+
     @Autowired
-    public UserController(UserService userService, CompanyService companyService, ServiceCategoryService serviceCategoryService, ServiceService serviceService) {
+    public UserController(UserService userService, CompanyService companyService, ServiceCategoryService serviceCategoryService, ServiceService serviceService, TimetableService timetableService) {
         this.userService = userService;
         this.companyService = companyService;
         this.serviceCategoryService = serviceCategoryService;
         this.serviceService = serviceService;
+        this.timetableService = timetableService;
     }
 
     @GetMapping("/")
@@ -91,7 +89,29 @@ public class UserController {
     public String choiceService(Model model, @RequestParam(name="category") String category, @RequestParam(name="categories") String[] categories){
         //Model model, @RequestParam(name="category") String category
         model.addAttribute("categories" , categories);
-        //System.out.println(category);
+        List <ServiceCategory>  serviceCategory = serviceCategoryService.findByName(category);
+
+        List <Service> services = new ArrayList<>();
+        for(int i=0;i<serviceCategory.size();i++) {
+
+            List <Service> servicesBuffer = serviceService.findByCatSerId(serviceCategory.get(i));
+            for(int j =0;j<servicesBuffer.size();j++)
+            {
+                services.add(servicesBuffer.get(j));
+            }
+        }
+
+        List<Timetable> timetable = new ArrayList<>();
+        for(int i=0;i<services.size();i++)
+        {
+            List<Timetable> timetableBuffer =  timetableService.findByService(services.get(i));
+
+            for(int j =0;j<timetableBuffer.size();j++)
+            {
+                timetable.add(timetableBuffer.get(j));
+            }
+        }
+        model.addAttribute("timetableList" , timetable);
         return "choiceService";
     }
 

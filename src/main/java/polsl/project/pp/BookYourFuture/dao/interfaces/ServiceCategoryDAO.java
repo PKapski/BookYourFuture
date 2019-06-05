@@ -9,7 +9,7 @@ public interface ServiceCategoryDAO {
 
     public ServiceCategory findById(int theId);
 
-    public ServiceCategory findByName(String categoryName);
+    public List<ServiceCategory> findByName(String categoryName);
 
     public void save(ServiceCategory theService);
 

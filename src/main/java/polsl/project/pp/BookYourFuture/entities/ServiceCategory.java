@@ -27,6 +27,11 @@ public class ServiceCategory {
     public ServiceCategory(){
 
     }
+
+    public int getId() {
+        return id;
+    }
+
     public ServiceCategory(String name){
         this.categoryName = name;
     }
