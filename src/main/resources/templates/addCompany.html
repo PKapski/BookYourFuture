@@ -42,6 +42,20 @@
                 <input name="categoryName"  class="form-control" placeholder="Service category" type="text">
             </div> <!-- form-group// -->
 
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa fa-calendar"></i> </span>
+                </div>
+                <input name="openTime" th:field="*{openTime}" class="form-control" placeholder="Open time" type="text">
+            </div> <!-- form-group// -->
+
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa fa-calendar"></i> </span>
+                </div>
+                <input name="closeTime" th:field="*{closeTime}" class="form-control" placeholder="Close time" type="text">
+            </div> <!-- form-group// -->
+
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block"> Add Company  </button>
             </div> <!-- form-group// -->

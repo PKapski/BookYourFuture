@@ -136,6 +136,8 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println(authentication.getName());
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            System.out.println("OPEN TIME " + company.getOpenTime());
+            System.out.println("CLOSE TIME " + company.getCloseTime());
             companyService.save(company,authentication.getName());
             System.out.println(authentication.getCredentials());
              ServiceCategory serviceCategory;// = serviceCategoryService.findByName(categoryName);
