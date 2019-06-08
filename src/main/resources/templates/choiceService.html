@@ -103,25 +103,28 @@
     </div>
     <div class="container">
         <div class="col-lg-10">
-            <div th:if="${not #lists.isEmpty(timetableList)}">
+            <div th:if="${not #lists.isEmpty(companies)}">
                 <h2>Available services:</h2>
                 <table class="table table-striped">
                     <tr>
-                        <th>Start time</th>
-                        <th>End time</th>
-                        <th>Date</th>
-                        <th>Name services</th>
                         <th>Company name</th>
-                        <th>Address</th>
+                        <th>Open time</th>
+                        <th>Close time</th>
+                        <th>Category</th>
+                        <th>Available services</th>
+
                     </tr>
-                    <tr th:each="timetable: ${timetableList}">
-                        <td th:text="${timetable.getStartTime()}"></td>
-                        <td th:text="${timetable.getEndTime()}"></td>
-                        <td th:text="${timetable.getDate()}"></td>
-                        <td th:text="${timetable.getServices().getName()}"></td>
-                        <td th:text="${timetable.getServices().getServicesCategories().getCompany().getName()}"></td>
-                        <td th:text="${timetable.getServices().getServicesCategories().getCompany().getAddress()}"></td>
-                        <td><a class="nav-link" href="/editCompany">Book</a></td>
+                    <tr th:each="company: ${companies}">
+                        <td th:text="${company.getName()}"></td>
+                        <td th:text="${company.getOpenTime()}"></td>
+                        <td th:text="${company.getCloseTime()}"></td>
+                        <td th:text="${company.getServicesCategories().get(0).getCategoryName()}"></td>
+                        <td>
+                            <span th:each="service: ${servicesMap.get(company)}">
+                                <a href="/bookService"><p th:text="${service.getName()}"></p></a>
+                            </span>
+                        </td>
+<!--                        <td><a class="nav-link" href="/editCompany">Book</a></td>-->
                     </tr>
 
                 </table>

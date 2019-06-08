@@ -13,7 +13,9 @@ import polsl.project.pp.BookYourFuture.services.interfaces.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class UserController {
@@ -87,31 +89,25 @@ public class UserController {
 
     @GetMapping("/choiceService")
     public String choiceService(Model model, @RequestParam(name="category") String category, @RequestParam(name="categories") String[] categories){
-        //Model model, @RequestParam(name="category") String category
+
         model.addAttribute("categories" , categories);
         List <ServiceCategory>  serviceCategory = serviceCategoryService.findByName(category);
-
-        List <Service> services = new ArrayList<>();
-        for(int i=0;i<serviceCategory.size();i++) {
-
-            List <Service> servicesBuffer = serviceService.findByCatSerId(serviceCategory.get(i));
-            for(int j =0;j<servicesBuffer.size();j++)
-            {
-                services.add(servicesBuffer.get(j));
-            }
+        List<Company> companies = new ArrayList<>();
+        Map<Company, List<Service>> servicesMap = new HashMap<>();
+        for(ServiceCategory serviceCategory1 : serviceCategory){
+            companies.add(serviceCategory1.getCompany());
         }
-
-        List<Timetable> timetable = new ArrayList<>();
-        for(int i=0;i<services.size();i++)
-        {
-            List<Timetable> timetableBuffer =  timetableService.findByService(services.get(i));
-
-            for(int j =0;j<timetableBuffer.size();j++)
-            {
-                timetable.add(timetableBuffer.get(j));
-            }
+        for(Company company: companies){
+            List<Service> servicesArray;
+            servicesArray = company.getServicesCategories().get(0).getServices();
+            servicesMap.put(company, servicesArray);
+//            for(Service service: servicesArray){
+//                servicesMap.put(company, service);
+//            }
         }
-        model.addAttribute("timetableList" , timetable);
+        model.addAttribute("companies", companies);
+        model.addAttribute("servicesMap", servicesMap);
+
         return "choiceService";
     }
 
@@ -240,9 +236,10 @@ public class UserController {
             Company company = companyService.findById(company_id);
             List<ServiceCategory> serviceCategories = company.getServicesCategories();
             service.setServicesCategories(serviceCategories.get(0));
+            serviceCategories.get(0).addService(service);
             serviceService.save(service);
         }
-        System.out.println("saveService method " + company_id);
+
         return "redirect:/myCompanies";
     }
 }

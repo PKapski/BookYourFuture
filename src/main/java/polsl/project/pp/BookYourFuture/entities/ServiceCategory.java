@@ -1,6 +1,7 @@
 package polsl.project.pp.BookYourFuture.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -43,6 +44,21 @@ public class ServiceCategory {
     public Company getCompany(){return company;}
 
     public void setCompany(Company company) {this.company = company;}
+
+    public List<Service> getServices() {
+        return services;
+    }
+
+    public void setServices(List<Service> services) {
+        this.services = services;
+    }
+
+    public void addService(Service service){
+        if(services==null){
+            services = new ArrayList<>();
+        }
+        services.add(service);
+    }
 
     @Override
     public String toString(){
