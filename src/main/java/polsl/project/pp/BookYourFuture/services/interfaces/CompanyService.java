@@ -16,4 +16,10 @@ public interface CompanyService {
     public void save(Company theCompany, String theUsername);
 
     public void deleteById(int theId);
+
+    public Company findByNIP(String nip);
+
+    public Company findByName(String name);
+
+    public void updateUser(int id,Company company);//id is id of company that will be updated
 }

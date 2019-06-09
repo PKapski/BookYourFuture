@@ -36,4 +36,18 @@ public class CompanyServiceImpl implements CompanyService {
     public void deleteById(int theId) {
         companyDAO.deleteById(theId);
     }
+    @Override
+    public Company findByNIP(String nip){
+        return companyDAO.findByNIP(nip);
+    }
+    @Override
+    public void updateUser(int id,Company company){ //id is id of company that will be updated
+        companyDAO.updateUser(id,company);
+    }
+    @Override
+    public Company findByName(String name){
+        return companyDAO.findByName(name);
+    }
+
 }
+

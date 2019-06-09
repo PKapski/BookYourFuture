@@ -26,6 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("admin").password("{noop}admin").roles("ADMIN")
                 .and()
                 .withUser("guest").password("{noop}guest").roles("GUEST");*/
+        auth.eraseCredentials(false);
         auth.jdbcAuthentication()
 
                 .dataSource(securityDataSource)

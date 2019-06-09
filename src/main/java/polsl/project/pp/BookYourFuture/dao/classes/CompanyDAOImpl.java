@@ -1,7 +1,9 @@
 package polsl.project.pp.BookYourFuture.dao.classes;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Query;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,6 +62,61 @@ public class CompanyDAOImpl implements CompanyDAO {
         Query<Company> theQuery = session.createQuery("DELETE from Company where id= :theId");
         theQuery.setParameter("theId", theId);
         theQuery.executeUpdate();
+
+    }
+    @Override
+    public Company findByNIP(String nip){
+        Session session = entityManager.unwrap(Session.class);
+
+        Query<Company> theQuery = session.createQuery("from Company where nip=:nip", Company.class);
+
+        theQuery.setParameter("nip", nip);
+
+        try {
+            Company company = theQuery.getSingleResult();
+            return company;
+        }catch(Exception e){return null;}
+    }
+    @Override
+    public void updateUser(int id,Company company){ //id is id of company that will be updated
+        Session session = entityManager.unwrap(Session.class);
+        Transaction tx=null;
+        try {
+            tx = session.beginTransaction();
+            Company comp = session.get(Company.class,id);
+            if (!company.getName().equals(""))
+                comp.setName(company.getName());
+            if (!company.getNip().equals(""))
+                comp.setNip(company.getNip());
+            if (!company.getAddress().equals(""))
+                comp.setAddress(company.getAddress());
+            if (!company.getOpenTime().equals(""))
+                comp.setOpenTime(company.getOpenTime());
+            if (!company.getCloseTime().equals(""))
+                comp.setCloseTime(company.getCloseTime());
+            session.update(comp);
+            tx.commit();
+        }
+        catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            throw e;
+        }
+        finally {
+            session.close();
+        }
+
+    }
+    @Override
+    public Company findByName(String name){
+        Session session = entityManager.unwrap(Session.class);
+
+        Query<Company> theQuery = session.createQuery("from Company where name=:name", Company.class);
+
+        theQuery.setParameter("name", name);
+        try {
+            Company company = theQuery.getSingleResult();
+            return company;
+        }catch(Exception e){return null;}
 
     }
 

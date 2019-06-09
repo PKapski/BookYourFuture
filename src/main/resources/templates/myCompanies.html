@@ -59,13 +59,17 @@
                 <th>Name</th>
                 <th>Address</th>
                 <th>NIP</th>
+                <th>Open time</th>
+                <th>Close time</th>
             </tr>
             <tr th:each="company: ${companiesList}">
                 <td th:text="${company.getId()}"></td>
                 <td th:text="${company.getName()}"></td>
                 <td th:text="${company.getAddress()}"></td>
                 <td th:text="${company.getNip()}"></td>
-                <td><a class="nav-link" href="/editCompany">Edit</a></td>
+                <td th:text="${company.getOpenTime()}"></td>
+                <td th:text="${company.getCloseTime()}"></td>
+                <td><a class="nav-link" th:href="@{/editCompany(id=${company.getId()})}">Edit</a></td>
                 <td><a class="nav-link" th:href="@{/deleteCompany(id=${company.getId()})}">Delete</a></td>
                 <td><a class="nav-link" th:href="@{/addServicee(id=${company.getId()})}">Add service</a></td>
             </tr>

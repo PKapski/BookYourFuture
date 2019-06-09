@@ -169,10 +169,7 @@ public class UserController {
         companyService.deleteById(id);
         return "redirect:/";
     }
-    @GetMapping("/editCompany")
-    public String editCompany(){
-        return "editCompany";
-    }
+
  /*   @PostMapping("/updateUser")
     public String updateUser(@ModelAttribute("updateUser")User user){
         user.setPassword("{noop}"+user.getPassword());
@@ -216,7 +213,29 @@ public class UserController {
 
      return "redirect:/";
  }
-
+    @GetMapping("/editCompany")
+    public String editCompany(Model model,@RequestParam(name="id")int id){
+        //System.out.println("edit"+id);
+        model.addAttribute("company_id",id);
+        model.addAttribute("company",new Company());
+        model.addAttribute("errorText","");
+        return "editCompany";
+    }
+@PostMapping("/updateCompany")
+public String updateCompany( @RequestParam(name="id") int id,@ModelAttribute(name="company")Company company,@RequestParam(name="password")String password, Model model){
+    //System.out.println(id);
+     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+     if (!authentication.getCredentials().equals(password)){
+        model.addAttribute("errorText","Incorrect password!");
+     }else if(companyService.findByNIP(company.getNip())!=null){
+         model.addAttribute("errorText","This NIP is already registered!");
+    }
+     else{
+        companyService.updateUser(id,company);
+        return "redirect:/";
+     }
+     return "editCompany";
+}
     @GetMapping("/addServicee")
     public String addServicee(Model model, @RequestParam(name="id") int id){
         model.addAttribute("service" , new Service());
