@@ -234,6 +234,8 @@ public String updateCompany( @RequestParam(name="id") int id,@ModelAttribute(nam
         companyService.updateUser(id,company);
         return "redirect:/";
      }
+     model.addAttribute("company_id", id);
+     model.addAttribute("company", company);
      return "editCompany";
 }
     @GetMapping("/addServicee")
