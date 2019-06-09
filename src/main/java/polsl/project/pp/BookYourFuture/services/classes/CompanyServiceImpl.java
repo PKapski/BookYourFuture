@@ -41,8 +41,8 @@ public class CompanyServiceImpl implements CompanyService {
         return companyDAO.findByNIP(nip);
     }
     @Override
-    public void updateUser(int id,Company company){ //id is id of company that will be updated
-        companyDAO.updateUser(id,company);
+    public void updateCompany(int id,Company company){ //id is id of company that will be updated
+        companyDAO.updateCompany(id,company);
     }
     @Override
     public Company findByName(String name){

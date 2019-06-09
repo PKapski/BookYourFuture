@@ -78,7 +78,7 @@ public class CompanyDAOImpl implements CompanyDAO {
         }catch(Exception e){return null;}
     }
     @Override
-    public void updateUser(int id,Company company){ //id is id of company that will be updated
+    public void updateCompany(int id,Company company){ //id is id of company that will be updated
         Session session = entityManager.unwrap(Session.class);
         Transaction tx=null;
         try {

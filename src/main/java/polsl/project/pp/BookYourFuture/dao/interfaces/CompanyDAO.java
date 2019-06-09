@@ -20,6 +20,6 @@ public interface CompanyDAO {
 
     public Company findByName(String name);
 
-    public void updateUser(int id,Company company); //id is id of company that will be updated
+    public void updateCompany(int id,Company company); //id is id of company that will be updated
 
 }

@@ -231,7 +231,7 @@ public String updateCompany( @RequestParam(name="id") int id,@ModelAttribute(nam
          model.addAttribute("errorText","This NIP is already registered!");
     }
      else{
-        companyService.updateUser(id,company);
+        companyService.updateCompany(id,company);
         return "redirect:/";
      }
      model.addAttribute("company_id", id);
