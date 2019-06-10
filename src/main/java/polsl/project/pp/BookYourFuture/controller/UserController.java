@@ -13,9 +13,7 @@ import polsl.project.pp.BookYourFuture.services.interfaces.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class UserController {
@@ -87,28 +85,45 @@ public class UserController {
         return "contact";
     }
 
-    @GetMapping("/choiceService")
-    public String choiceService(Model model, @RequestParam(name="category") String category, @RequestParam(name="categories") String[] categories){
-
+    @GetMapping("/choiceCompany")
+    public String choiceCompany(Model model, @RequestParam(name="category") String category, @RequestParam(name="categories") String[] categories){
+        //Model model, @RequestParam(name="category") String category
         model.addAttribute("categories" , categories);
         List <ServiceCategory>  serviceCategory = serviceCategoryService.findByName(category);
-        List<Company> companies = new ArrayList<>();
-        Map<Company, List<Service>> servicesMap = new HashMap<>();
-        for(ServiceCategory serviceCategory1 : serviceCategory){
-            companies.add(serviceCategory1.getCompany());
-        }
-        for(Company company: companies){
-            List<Service> servicesArray;
-            servicesArray = company.getServicesCategories().get(0).getServices();
-            servicesMap.put(company, servicesArray);
-//            for(Service service: servicesArray){
-//                servicesMap.put(company, service);
-//            }
-        }
-        model.addAttribute("companies", companies);
-        model.addAttribute("servicesMap", servicesMap);
 
-        return "choiceService";
+        List <Company> companies = new ArrayList<>();
+        for(int i=0;i<serviceCategory.size();i++)
+        {
+            companies.add(serviceCategory.get(i).getCompany());
+        }
+
+        List <Service> services = new ArrayList<>();
+        for(int i=0;i<serviceCategory.size();i++) {
+
+            List <Service> servicesBuffer = serviceService.findByCatSerId(serviceCategory.get(i));
+            for(int j =0;j<servicesBuffer.size();j++)
+            {
+                services.add(servicesBuffer.get(j));
+            }
+        }
+
+
+
+
+        List<Timetable> timetable = new ArrayList<>();
+        for(int i=0;i<services.size();i++)
+        {
+            List<Timetable> timetableBuffer =  timetableService.findByService(services.get(i));
+
+            for(int j =0;j<timetableBuffer.size();j++)
+            {
+                timetable.add(timetableBuffer.get(j));
+            }
+        }
+
+        model.addAttribute("companies",companies);
+        model.addAttribute("timetableList" , timetable);
+        return "choiceCompany";
     }
 
     @GetMapping("/addCompany")
@@ -132,8 +147,6 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println(authentication.getName());
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            System.out.println("OPEN TIME " + company.getOpenTime());
-            System.out.println("CLOSE TIME " + company.getCloseTime());
             companyService.save(company,authentication.getName());
             System.out.println(authentication.getCredentials());
              ServiceCategory serviceCategory;// = serviceCategoryService.findByName(categoryName);
@@ -169,7 +182,10 @@ public class UserController {
         companyService.deleteById(id);
         return "redirect:/";
     }
-
+    @GetMapping("/editCompany")
+    public String editCompany(){
+        return "editCompany";
+    }
  /*   @PostMapping("/updateUser")
     public String updateUser(@ModelAttribute("updateUser")User user){
         user.setPassword("{noop}"+user.getPassword());
@@ -213,31 +229,7 @@ public class UserController {
 
      return "redirect:/";
  }
-    @GetMapping("/editCompany")
-    public String editCompany(Model model,@RequestParam(name="id")int id){
-        //System.out.println("edit"+id);
-        model.addAttribute("company_id",id);
-        model.addAttribute("company",new Company());
-        model.addAttribute("errorText","");
-        return "editCompany";
-    }
-@PostMapping("/updateCompany")
-public String updateCompany( @RequestParam(name="id") int id,@ModelAttribute(name="company")Company company,@RequestParam(name="password")String password, Model model){
-    //System.out.println(id);
-     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-     if (!authentication.getCredentials().equals(password)){
-        model.addAttribute("errorText","Incorrect password!");
-     }else if(companyService.findByNIP(company.getNip())!=null){
-         model.addAttribute("errorText","This NIP is already registered!");
-    }
-     else{
-        companyService.updateCompany(id,company);
-        return "redirect:/";
-     }
-     model.addAttribute("company_id", id);
-     model.addAttribute("company", company);
-     return "editCompany";
-}
+
     @GetMapping("/addServicee")
     public String addServicee(Model model, @RequestParam(name="id") int id){
         model.addAttribute("service" , new Service());
@@ -257,10 +249,9 @@ public String updateCompany( @RequestParam(name="id") int id,@ModelAttribute(nam
             Company company = companyService.findById(company_id);
             List<ServiceCategory> serviceCategories = company.getServicesCategories();
             service.setServicesCategories(serviceCategories.get(0));
-            serviceCategories.get(0).addService(service);
             serviceService.save(service);
         }
-
+        System.out.println("saveService method " + company_id);
         return "redirect:/myCompanies";
     }
 }
