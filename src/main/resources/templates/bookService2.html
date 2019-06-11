@@ -102,35 +102,29 @@
         </div>
     </div>
     <div class="container">
-        <div class="col-lg-10">
-            <div th:if="${not #lists.isEmpty(companies)}">
-                <h2>Available services:</h2>
+        <div>
+<!--            <form th:action="@{'/bookServiceAction/' + ${service_id}}">-->
+<!--                <input th:type="date" name="datetime">-->
+<!--                <input th:type="submit" name="submit" th:value="Book">-->
+<!--            </form>-->
+            <div th:if="${not #lists.isEmpty(serviceTimeList)}">
+                <h2>Available hours for that service :</h2>
                 <table class="table table-striped">
                     <tr>
-                        <th>Company name</th>
-                        <th>Open time</th>
-                        <th>Close time</th>
-                        <th>Category</th>
-                        <th>Available services</th>
-
+                        <th>Start time</th>
+                        <th>End time</th>
                     </tr>
-                    <tr th:each="company: ${companies}">
-                        <td th:text="${company.getName()}"></td>
-                        <td th:text="${company.getOpenTime()}"></td>
-                        <td th:text="${company.getCloseTime()}"></td>
-                        <td th:text="${company.getServicesCategories().get(0).getCategoryName()}"></td>
-                        <td>
-                            <span th:each="service: ${servicesMap.get(company)}">
-                                <a th:href="@{'/bookService/' + ${service.getId()}}"><p th:text="${service.getName()}"></p></a>
-                            </span>
-                        </td>
-<!--                        <td><a class="nav-link" href="/editCompany">Book</a></td>-->
+                    <tr th:each="serviceTime: ${serviceTimeList}">
+                        <td th:text="${serviceTime.getStartTime().toString()}"></td>
+                        <td th:text="${serviceTime.getEndTime().toString()}"></td>
+                        <td><a class="nav-link" th:href="@{/saveTime}">Choose</a></td>
                     </tr>
-
                 </table>
             </div>
         </div>
     </div>
+</div>
+
 </div>
 
 

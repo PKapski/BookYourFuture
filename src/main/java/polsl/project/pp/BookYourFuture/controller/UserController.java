@@ -12,10 +12,9 @@ import polsl.project.pp.BookYourFuture.entities.*;
 import polsl.project.pp.BookYourFuture.services.interfaces.*;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Controller
 public class UserController {
@@ -109,6 +108,106 @@ public class UserController {
         model.addAttribute("servicesMap", servicesMap);
 
         return "choiceService";
+    }
+
+    @GetMapping("/bookService/{service_id}")
+    public String bookService(Model model, @PathVariable(value="service_id") int service_id){
+        System.out.println("bookService " + service_id);
+        model.addAttribute("service_id", service_id);
+        return "bookService";
+    }
+
+    class ServiceTime{
+        LocalTime startTime;
+        LocalTime endTime;
+
+        public ServiceTime(LocalTime startTime, LocalTime endTime) {
+            this.startTime = startTime;
+            this.endTime = endTime;
+        }
+
+        public LocalTime getStartTime() {
+            return startTime;
+        }
+
+        public void setStartTime(LocalTime startTime) {
+            this.startTime = startTime;
+        }
+
+        public LocalTime getEndTime() {
+            return endTime;
+        }
+
+        public void setEndTime(LocalTime endTime) {
+            this.endTime = endTime;
+        }
+
+        @Override
+        public String toString() {
+            return "ServiceTime{" +
+                    "startTime=" + startTime +
+                    ", endTime=" + endTime +
+                    '}';
+        }
+    }
+
+    @GetMapping("/bookServiceAction/{service_id}")
+    public String bookServiceAction(Model model, @RequestParam("datetime") String datetime, @PathVariable("service_id") int service_id){
+        System.out.println(datetime);
+        System.out.println("bookServiceAction " + service_id);
+        Service service = serviceService.findById(service_id);
+        Company company = service.getServicesCategories().getCompany();
+        LocalTime companyStart = LocalTime.parse(company.getOpenTime(), DateTimeFormatter.ofPattern("HH:mm:ss"));
+        LocalTime companyEnd = LocalTime.parse(company.getCloseTime(), DateTimeFormatter.ofPattern("HH:mm:ss"));
+        List<ServiceTime> serviceTimeList = new ArrayList<>();
+        int serviceDuration = service.getDuration();
+
+        //filling the board with possible hours
+        while(companyStart.isBefore(companyEnd)){
+            LocalTime companyEndTmp = companyStart.plusMinutes(serviceDuration);
+            serviceTimeList.add(new ServiceTime(companyStart, companyEndTmp));
+            companyStart = companyEndTmp;
+        }
+
+        List<Timetable> timetableList = new ArrayList<>();
+        ServiceCategory serviceCategory = service.getServicesCategories();
+        //list of services which are assigned to a specific company
+        List<Service> serviceList = serviceService.findByCatSerId(serviceCategory);
+
+        //searching for busy hours for the services of a given company
+        for(Service theService :serviceList){
+            timetableList.addAll(timetableService.findByServiceAndDate(datetime, theService));
+            System.out.println(timetableList);
+        }
+
+        if(timetableList.size()>0){
+            for(Timetable timetable :timetableList){
+
+                //start and end time of service which we want to book
+                LocalTime startTime = LocalTime.parse(timetable.getStartTime(), DateTimeFormatter.ofPattern("HH:mm:ss"));
+                LocalTime endTime = LocalTime.parse(timetable.getEndTime(), DateTimeFormatter.ofPattern("HH:mm:ss"));
+
+                //
+                //iterating through the list of available hours for a specific service
+                Iterator<ServiceTime> serviceTimeIterator = serviceTimeList.iterator();
+                while(serviceTimeIterator.hasNext()){
+                    ServiceTime serviceTime = serviceTimeIterator.next();
+                    if(((serviceTime.getStartTime().isBefore(startTime) || serviceTime.getStartTime().equals(startTime))
+                            && (serviceTime.getEndTime().isAfter(startTime)))
+                    || ((serviceTime.getStartTime().isBefore(endTime) || serviceTime.getEndTime().equals(endTime))
+                            && (serviceTime.getEndTime().isAfter(endTime)))
+                            || ((startTime.isBefore(serviceTime.getStartTime()) && endTime.isAfter(serviceTime.getEndTime())))){
+                            //deletion of the term when it coincides with the date of the reserved service
+                            serviceTimeIterator.remove();
+                            System.out.println("ServiceTime removed! " + serviceTime);
+                    }
+                }
+            }
+        }else{
+            System.out.println("Timetable is empty in that date");
+        }
+        model.addAttribute("serviceTimeList", serviceTimeList);
+        return "bookService2";
     }
 
     @GetMapping("/addCompany")

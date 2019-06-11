@@ -42,8 +42,8 @@ public class ServiceDAOImpl implements ServiceDAO {
     @Override
     public List<Service> findByCatSerId(ServiceCategory theId) {
         Session session = entityManager.unwrap(Session.class);
-        return session.createQuery("from Service where servicesCategories=:theId")
-                .setParameter("theId",theId).getResultList();
+        return session.createQuery("from Service where category_service_id=:theId")
+                .setParameter("theId",theId.getId()).getResultList();
     }
 
     @Override
