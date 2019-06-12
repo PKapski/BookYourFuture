@@ -103,10 +103,11 @@
     </div>
     <div class="container">
         <div>
-<!--            <form th:action="@{'/bookServiceAction/' + ${service_id}}">-->
-<!--                <input th:type="date" name="datetime">-->
-<!--                <input th:type="submit" name="submit" th:value="Book">-->
-<!--            </form>-->
+            <form th:align="center" th:action="@{'/bookServiceAction/' + ${service_id}}">
+                <input th:type="date" name="datetime">
+                <input th:type="submit" name="submit" th:value="Book">
+            </form>
+            <br>
             <div th:if="${not #lists.isEmpty(serviceTimeList)}">
                 <h2>Available hours for that service :</h2>
                 <table class="table table-striped">

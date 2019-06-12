@@ -12,6 +12,8 @@ import polsl.project.pp.BookYourFuture.entities.*;
 import polsl.project.pp.BookYourFuture.services.interfaces.*;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -112,7 +114,6 @@ public class UserController {
 
     @GetMapping("/bookService/{service_id}")
     public String bookService(Model model, @PathVariable(value="service_id") int service_id){
-        System.out.println("bookService " + service_id);
         model.addAttribute("service_id", service_id);
         return "bookService";
     }
@@ -153,10 +154,18 @@ public class UserController {
 
     @GetMapping("/bookServiceAction/{service_id}")
     public String bookServiceAction(Model model, @RequestParam("datetime") String datetime, @PathVariable("service_id") int service_id){
+
         System.out.println(datetime);
-        System.out.println("bookServiceAction " + service_id);
+        LocalDate selectedDate = LocalDate.parse(datetime);
+        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        LocalDate actDate = LocalDate.parse(date);
+        if(selectedDate.isBefore(actDate)){
+            System.out.println("You must choose a future date");
+            return "bookService";
+        }
         Service service = serviceService.findById(service_id);
         Company company = service.getServicesCategories().getCompany();
+        //getting start and end open time for the specific company
         LocalTime companyStart = LocalTime.parse(company.getOpenTime(), DateTimeFormatter.ofPattern("HH:mm:ss"));
         LocalTime companyEnd = LocalTime.parse(company.getCloseTime(), DateTimeFormatter.ofPattern("HH:mm:ss"));
         List<ServiceTime> serviceTimeList = new ArrayList<>();
@@ -183,7 +192,7 @@ public class UserController {
         if(timetableList.size()>0){
             for(Timetable timetable :timetableList){
 
-                //start and end time of service which we want to book
+                //start and end time of service which is booked
                 LocalTime startTime = LocalTime.parse(timetable.getStartTime(), DateTimeFormatter.ofPattern("HH:mm:ss"));
                 LocalTime endTime = LocalTime.parse(timetable.getEndTime(), DateTimeFormatter.ofPattern("HH:mm:ss"));
 
@@ -207,6 +216,7 @@ public class UserController {
             System.out.println("Timetable is empty in that date");
         }
         model.addAttribute("serviceTimeList", serviceTimeList);
+        model.addAttribute("service_id", service_id);
         return "bookService2";
     }
 
