@@ -18,6 +18,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+
 @Controller
 public class UserController {
 
@@ -117,6 +118,7 @@ public class UserController {
     @GetMapping("/bookService/{service_id}")
     public String bookService(Model model, @PathVariable(value="service_id") int service_id){
         model.addAttribute("service_id", service_id);
+        model.addAttribute("error", false);
         return "bookService";
     }
 
@@ -158,12 +160,12 @@ public class UserController {
     @GetMapping("/bookServiceAction/{service_id}")
     public String bookServiceAction(Model model, @RequestParam("datetime") String datetime, @PathVariable("service_id") int service_id){
 
-        System.out.println(datetime);
         LocalDate selectedDate = LocalDate.parse(datetime);
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         LocalDate actDate = LocalDate.parse(date);
         if(selectedDate.isBefore(actDate)){
             System.out.println("You must choose a future date");
+            model.addAttribute("error", true);
             return "bookService";
         }
         Service service = serviceService.findById(service_id);
@@ -209,6 +211,7 @@ public class UserController {
                     || ((serviceTime.getStartTime().isBefore(endTime) || serviceTime.getEndTime().equals(endTime))
                             && (serviceTime.getEndTime().isAfter(endTime)))
                             || ((startTime.isBefore(serviceTime.getStartTime()) && endTime.isAfter(serviceTime.getEndTime())))){
+
                             //deletion of the term when it coincides with the date of the reserved service
                             serviceTimeIterator.remove();
                             System.out.println("ServiceTime removed! " + serviceTime);
@@ -218,23 +221,29 @@ public class UserController {
         }else{
             System.out.println("Timetable is empty in that date");
         }
-        for(ServiceTime serviceTime :serviceTimeList){
-
-        }
         model.addAttribute("serviceTimeList", serviceTimeList);
         model.addAttribute("service_id", service_id);
         model.addAttribute("datetime", datetime);
+        model.addAttribute("error", false);
         return "bookService2";
     }
 
     @GetMapping("/saveDate")
     public String saveDate(@RequestParam("datetime") String datetime, @RequestParam("serviceTimeId") int serviceTimeId, @RequestParam("service_id") int service_id){
-        System.out.println("saveDate");
-        System.out.println(datetime);
-        System.out.println(serviceTimeList.get(serviceTimeId));
-        System.out.println(service_id);
 
-
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication.getPrincipal().toString().equals("anonymousUser")){
+            System.out.println("You must sign when you want to book date");
+            return "redirect:/login";
+        }else{
+            User user=userService.findByUsername(authentication.getName());
+            Service service = serviceService.findById(service_id);
+            ServiceTime serviceTime = serviceTimeList.get(serviceTimeId);
+            Timetable timetable = new Timetable(serviceTime.getStartTime().toString(), serviceTime.getEndTime().toString(), datetime);
+            timetable.setServices(service);
+            timetable.setUser(user);
+            timetableService.save(timetable);
+        }
         return "redirect:/";
     }
 
@@ -260,8 +269,6 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println(authentication.getName());
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            System.out.println("OPEN TIME " + company.getOpenTime());
-            System.out.println("CLOSE TIME " + company.getCloseTime());
             companyService.save(company,authentication.getName());
             System.out.println(authentication.getCredentials());
              ServiceCategory serviceCategory;// = serviceCategoryService.findByName(categoryName);
