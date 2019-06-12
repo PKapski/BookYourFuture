@@ -34,6 +34,8 @@ public class UserController {
 
     private List<ServiceTime> serviceTimeList;
 
+    private String[] categories;
+
     @Autowired
     public UserController(UserService userService, CompanyService companyService, ServiceCategoryService serviceCategoryService, ServiceService serviceService, TimetableService timetableService) {
         this.userService = userService;
@@ -45,7 +47,7 @@ public class UserController {
 
     @GetMapping("/")
     public String index(Model model, Principal principal){
-        String[] categories={"Haircut","Massage","Squash","Dentist","Mechanic","Engraver"};
+        categories=new String[]{"Haircut","Massage","Squash","Dentist","Mechanic","Engraver"};
         model.addAttribute("categories" , categories);
         return "index";
     }
@@ -119,6 +121,7 @@ public class UserController {
     public String bookService(Model model, @PathVariable(value="service_id") int service_id){
         model.addAttribute("service_id", service_id);
         model.addAttribute("error", false);
+        model.addAttribute("categories", categories);
         return "bookService";
     }
 
@@ -160,10 +163,15 @@ public class UserController {
     @GetMapping("/bookServiceAction/{service_id}")
     public String bookServiceAction(Model model, @RequestParam("datetime") String datetime, @PathVariable("service_id") int service_id){
 
+        model.addAttribute("categories", categories);
+        if(datetime.equals("")){
+            model.addAttribute("error", true);
+            return "bookService";
+        }
         LocalDate selectedDate = LocalDate.parse(datetime);
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         LocalDate actDate = LocalDate.parse(date);
-        if(selectedDate.isBefore(actDate)){
+        if(datetime.equals("") || selectedDate.isBefore(actDate)){
             System.out.println("You must choose a future date");
             model.addAttribute("error", true);
             return "bookService";
