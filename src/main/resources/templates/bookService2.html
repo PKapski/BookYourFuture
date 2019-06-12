@@ -118,7 +118,7 @@
                     <tr th:each="serviceTime: ${serviceTimeList}">
                         <td th:text="${serviceTime.getStartTime().toString()}"></td>
                         <td th:text="${serviceTime.getEndTime().toString()}"></td>
-                        <td><a class="nav-link" th:href="@{/saveTime}">Choose</a></td>
+                        <td><a class="nav-link" th:href="@{/saveDate(serviceTimeId=${serviceTimeList.indexOf(serviceTime)}, service_id=${service_id}, datetime=${datetime})}">Choose</a></td>
                     </tr>
                 </table>
             </div>

@@ -31,6 +31,8 @@ public class UserController {
 
     private TimetableService timetableService;
 
+    private List<ServiceTime> serviceTimeList;
+
     @Autowired
     public UserController(UserService userService, CompanyService companyService, ServiceCategoryService serviceCategoryService, ServiceService serviceService, TimetableService timetableService) {
         this.userService = userService;
@@ -118,6 +120,7 @@ public class UserController {
         return "bookService";
     }
 
+    //helpful class for storing possible dates of a given service
     class ServiceTime{
         LocalTime startTime;
         LocalTime endTime;
@@ -168,7 +171,7 @@ public class UserController {
         //getting start and end open time for the specific company
         LocalTime companyStart = LocalTime.parse(company.getOpenTime(), DateTimeFormatter.ofPattern("HH:mm:ss"));
         LocalTime companyEnd = LocalTime.parse(company.getCloseTime(), DateTimeFormatter.ofPattern("HH:mm:ss"));
-        List<ServiceTime> serviceTimeList = new ArrayList<>();
+        serviceTimeList = new ArrayList<>();
         int serviceDuration = service.getDuration();
 
         //filling the board with possible hours
@@ -215,10 +218,26 @@ public class UserController {
         }else{
             System.out.println("Timetable is empty in that date");
         }
+        for(ServiceTime serviceTime :serviceTimeList){
+
+        }
         model.addAttribute("serviceTimeList", serviceTimeList);
         model.addAttribute("service_id", service_id);
+        model.addAttribute("datetime", datetime);
         return "bookService2";
     }
+
+    @GetMapping("/saveDate")
+    public String saveDate(@RequestParam("datetime") String datetime, @RequestParam("serviceTimeId") int serviceTimeId, @RequestParam("service_id") int service_id){
+        System.out.println("saveDate");
+        System.out.println(datetime);
+        System.out.println(serviceTimeList.get(serviceTimeId));
+        System.out.println(service_id);
+
+
+        return "redirect:/";
+    }
+
 
     @GetMapping("/addCompany")
     public String addCompany(Model model){
