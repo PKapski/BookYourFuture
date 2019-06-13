@@ -98,25 +98,26 @@
                     }
                 }
             </script>
-
         </div>
     </div>
-    <div class="container">
-        <div>
-            <form th:align="center" th:action="@{'/bookServiceAction/' + ${service_id}}">
-                <input th:type="date" name="datetime">
-                <input th:type="submit" name="submit" th:value="Book">
+    <div class="container" align="center">
+        <div class="col-lg-8">
+            <div align="center">
+            <form th:action="@{'/bookServiceAction/' + ${service_id}}">
+                <input class="input-group-text form-control-lg" size="18" th:type="date" name="datetime"><br>
+                <input class="btn btn-primary" th:type="submit" name="submit" th:value="Select">
             </form>
             <br>
+            </div>
             <div th:if="${not #lists.isEmpty(serviceTimeList)}">
-                <h2>Available hours for that service :</h2>
+                <h2 align="left">Available hours for that service </h2>
                 <table class="table table-striped">
                     <tr>
                         <th>Start time</th>
                         <th>End time</th>
                     </tr>
                     <tr th:each="serviceTime: ${serviceTimeList}">
-                        <td th:text="${serviceTime.getStartTime().toString()}"></td>
+                        <td style="display:table-cell; vertical-align:middle;" th:text="${serviceTime.getStartTime().toString()}"></td>
                         <td th:text="${serviceTime.getEndTime().toString()}"></td>
                         <td><a class="nav-link" th:href="@{/saveDate(serviceTimeId=${serviceTimeList.indexOf(serviceTime)}, service_id=${service_id}, datetime=${datetime})}">Choose</a></td>
                     </tr>

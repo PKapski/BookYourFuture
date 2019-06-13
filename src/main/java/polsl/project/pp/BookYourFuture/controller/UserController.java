@@ -47,7 +47,11 @@ public class UserController {
 
     @GetMapping("/")
     public String index(Model model, Principal principal){
-        categories=new String[]{"Haircut","Massage","Squash","Dentist","Mechanic","Engraver"};
+//        categories=new String[]{"Haircut","Massage","Squash","Dentist","Mechanic","Engraver"};
+        if(categories==null){
+            List<String> categoriesList = serviceCategoryService.findAllName();
+            categories = categoriesList.toArray(new String[0]);
+        }
         model.addAttribute("categories" , categories);
         return "index";
     }
@@ -289,7 +293,8 @@ public class UserController {
 //            }
             serviceCategoryService.save(serviceCategory);
         }
-
+        List<String> categoriesList = serviceCategoryService.findAllName();
+        categories = categoriesList.toArray(new String[0]);
 
         return "redirect:/";
     }

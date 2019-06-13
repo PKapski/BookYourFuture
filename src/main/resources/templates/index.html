@@ -77,7 +77,7 @@
             <div>
               <dl id="myDL">
                     <tr th:each="category: ${categories} ">
-                    <ld><a class="nav-link list-group-item list-group-item-action" th:href="@{/choiceService(category=${category},categories=${categories})}" ><td th:text="${category}"></td></a></ld>
+                    <ld ><a class="nav-link list-group-item list-group-item-action" th:href="@{/choiceService(category=${category},categories=${categories})}" ><td th:text="${category}"></td></a></ld>
                </dl>
             </div>
             <script>

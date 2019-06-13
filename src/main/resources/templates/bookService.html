@@ -105,8 +105,8 @@
         <div align="center">
             <p><td th:text="${error} ? 'You must enter future date:' : 'Select the date in which you want to book the service: '" /></p>
             <form th:action="@{'/bookServiceAction/' + ${service_id}}">
-                <input th:type="date" name="datetime">
-                <input th:type="submit" name="submit" th:value="Book">
+                <input class="input-group-text form-control-lg" size="18" th:type="date" name="datetime"><br>
+                <input class="btn btn-primary" th:type="submit" name="submit" th:value="Select">
             </form>
         </div>
     </div>
