@@ -32,17 +32,20 @@ public class UserController {
 
     private TimetableService timetableService;
 
+    private CategoryService categoryService;
+
     private List<ServiceTime> serviceTimeList;
 
     private String[] categories;
 
     @Autowired
-    public UserController(UserService userService, CompanyService companyService, ServiceCategoryService serviceCategoryService, ServiceService serviceService, TimetableService timetableService) {
+    public UserController(UserService userService, CompanyService companyService, ServiceCategoryService serviceCategoryService, ServiceService serviceService, TimetableService timetableService, CategoryService categoryService) {
         this.userService = userService;
         this.companyService = companyService;
         this.serviceCategoryService = serviceCategoryService;
         this.serviceService = serviceService;
         this.timetableService = timetableService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping("/")
@@ -262,8 +265,12 @@ public class UserController {
 
     @GetMapping("/addCompany")
     public String addCompany(Model model){
-       // model.addAttribute("serviceCategory", new ServiceCategory());
         model.addAttribute("company" , new Company());
+
+        //int categoryId;
+        List<Category> categories = categoryService.findAll();
+        model.addAttribute("categories", categories);
+        //model.addAttribute("categoryId", categoryId);
         return "addCompany";
     }
     @GetMapping("/myCompanies")
@@ -276,22 +283,20 @@ public class UserController {
     }
 
     @PostMapping("/saveCompany")
-    public String saveCompany(@ModelAttribute("company")Company company,@RequestParam("categoryName") String categoryName){
+    public String saveCompany(@ModelAttribute("company")Company company,@RequestParam("categoryId") int categoryId){
 
+        System.out.println("categoryId " + categoryId);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println(authentication.getName());
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             companyService.save(company,authentication.getName());
-            System.out.println(authentication.getCredentials());
-             ServiceCategory serviceCategory;// = serviceCategoryService.findByName(categoryName);
-//            if(serviceCategory==null){
-//                System.out.println("created serviceCategory");
-                serviceCategory = new ServiceCategory();
-                serviceCategory.setCategoryName(categoryName);
-                serviceCategory.setCompany(company);
-                company.addServiceCategory(serviceCategory);
-//            }
-            serviceCategoryService.save(serviceCategory);
+             ServiceCategory serviceCategory;
+             Category category = new Category(categoryService.findById(categoryId).getCategoryName());
+             serviceCategory = new ServiceCategory();
+             serviceCategory.setCategoryName(category.getCategoryName());
+             serviceCategory.setCompany(company);
+             company.addServiceCategory(serviceCategory);
+             serviceCategoryService.save(serviceCategory);
         }
         List<String> categoriesList = serviceCategoryService.findAllName();
         categories = categoriesList.toArray(new String[0]);

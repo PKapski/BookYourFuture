@@ -39,7 +39,12 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-book"></i></span>
                 </div>
-                <input name="categoryName"  class="form-control" placeholder="Service category" type="text">
+<!--                <input name="categoryName"  class="form-control" placeholder="Service category" type="text">-->
+                <select name="categoryId" class="form-control">
+                    <option th:each="category:${categories}"
+                        th:value="${category.getId()}"
+                        th:utext="${category.getCategoryName()}"/>
+                </select>
             </div> <!-- form-group// -->
 
             <div class="form-group input-group">
