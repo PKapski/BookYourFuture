@@ -35,7 +35,7 @@ CREATE TABLE `categories` (
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
-INSERT INTO `categories` VALUES (1,'Haircut'),(2,'Mechanic'),(3,'Masage'),(4,'Dentist'),(5,'Therapist'),(6,'Beautician');
+INSERT INTO `categories` VALUES (1,'Haircut'),(2,'Mechanic'),(3,'Massage'),(4,'Dentist'),(5,'Therapist'),(6,'Beautician'), (7,'Others');
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
