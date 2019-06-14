@@ -31,7 +31,7 @@
     <div sec:authorize="!isAuthenticated()">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="registerUser"><i class="fas fa-user"></i> Sign Up</a>
+                <a class="nnipav-link" href="registerUser"><i class="fas fa-user"></i> Sign Up</a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
@@ -67,8 +67,8 @@
                 <th>Close time</th>
             </tr>
             <th:block th:each="company: ${companiesList}" >
-            <tr class="accordion-toggle" data-toggle="collapse" th:attr="data-target='#accordion_'+${company.getId()}">
-                <td>+</td>
+            <tr >
+                <td class="accordion-toggle" data-toggle="collapse" th:attr="data-target='#accordion_'+${company.getId()}">+</td>
                 <td th:text="${company.getId()}"></td>
                 <td th:text="${company.getName()}"></td>
                 <td th:text="${company.getAddress()}"></td>
