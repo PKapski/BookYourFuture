@@ -20,11 +20,7 @@ public interface UserDAO {
 
     public User findByPhone(String phone);
 
-    public void updateUser(User theUser, String phone, String password);
-
-    public void updateUserPhone(User theUser,String phone);
-
-    public void updateUserPass(User theUser,String password);
+    public void updateUser(int id,User user);
 
     public boolean hasEmptyValues(User user);
 }

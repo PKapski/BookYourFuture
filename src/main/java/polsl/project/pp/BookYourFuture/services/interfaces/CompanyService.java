@@ -9,7 +9,7 @@ import java.util.List;
 public interface CompanyService {
     public List<Company> findAll();
 
-    public List<Company> findAllByUser(User user);
+    public List<Company> findAllByUserId(int id);
 
     public Company findById(int theId);
 

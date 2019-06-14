@@ -15,11 +15,7 @@ public interface UserService {
 
     public User findByUsername(String theUsername);
 
-    public void updateUser(User theUser, String phone, String password);
-
-    public void updateUserPhone(User theUser,String phone);
-
-    public void updateUserPass(User theUser,String password);
+    public void updateUser(int id,User user);
 
     public User findByEmail(String email);
 

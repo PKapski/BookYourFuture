@@ -282,7 +282,7 @@ public class UserController {
         User user=userService.findByUsername(authentication.getName());
         model.addAttribute("services",serviceService.findAll());
         model.addAttribute("serviceCategory",serviceCategoryService.findAll());
-        model.addAttribute("companiesList" , companyService.findAllByUser(user));
+        model.addAttribute("companiesList" , companyService.findAllByUserId(user.getId()));
         return "myCompanies";
     }
 
@@ -319,7 +319,7 @@ public class UserController {
             }
             List<String> categoriesList = serviceCategoryService.findAllName();
             categories = categoriesList.toArray(new String[0]);
-            return "redirect:/";
+            return "redirect:/myCompanies";
         }
         List<Category> categories = categoryService.findAll();
         model.addAttribute("categories", categories);
@@ -333,12 +333,12 @@ public class UserController {
     public String deleteCompany(@RequestParam(name="id")int id){
         System.out.println("ID: -----"+id);
         companyService.deleteById(id);
-        return "redirect:/";
+        return "redirect:/myCompanies";
     }
     @GetMapping("/deleteService")
     public String deleteService(@RequestParam(name="id") int id){
         serviceService.deleteById(id);
-        return "redirect:/";
+        return "redirect:/myCompanies";
     }
 
 
@@ -363,6 +363,7 @@ public class UserController {
             String currentLogin = authentication.getName();
             u = userService.findByUsername(currentLogin);
         }*/
+     model.addAttribute("errorText","");
      model.addAttribute("user", new User());
      return "editAccount";
  }
@@ -370,33 +371,34 @@ public class UserController {
  @PostMapping("/updateUser")
  //@ResponseBody
     //public String updateUser(@RequestBody User user, @PathVariable String id){
-     public String updateUser(
-             @RequestParam("phone") String phone,
-             @RequestParam("currentPassword") String currPass,
-             @RequestParam("password") String password,
-             @RequestParam("repeatPassword") String repeatPassword){
-
-     User user = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-     currPass = "{noop}" + currPass;
-     if(user.getPassword().equals(currPass)){
-         if ((password.equals("") || repeatPassword.equals(""))) {
-             userService.updateUserPhone(user, phone);
-             System.out.println("changed only phone");
-         }
-         else if (phone.equals("") && password.equals(repeatPassword)) {
-             userService.updateUserPass(user, password);
-             System.out.println("changed only password");
-         }
-         else if (password.equals(repeatPassword)) {
-             userService.updateUser(user, phone, password);
-             System.out.println("changed phone and password");
-         }
+     public String updateUser(@ModelAttribute("user")User user,Model model, @RequestParam("currentPassword")String currPass,@RequestParam("repeatPassword")String repPass){
+     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+     if (!authentication.getCredentials().equals(currPass)) {
+         model.addAttribute("errorText", "Incorrect password!");
      }
-     else {
-         System.out.println("Invalid password"); // TO DO
+     else if (!user.getPassword().equals(repPass)) {
+         model.addAttribute("errorText", "Passwords are not equal!");
+     } else if (userService.findByUsername(user.getLogin())!=null){
+         model.addAttribute("errorText","User with this login already exists!");
      }
+     else if (userService.findByEmail(user.getEmail())!=null){
+         model.addAttribute("errorText","User with this email already exists!");
+     }
+     else if (userService.findByPhone(user.getPhone())!=null){
+         model.addAttribute("errorText","User with this phone number already exists!");
+     }
+     else if(!StringUtils.isBlank(user.getPhone()) && user.getPhone().length()!=9){
+         model.addAttribute("errorText","Phone number is incorrect!");
+     }
+     else{
+            userService.updateUser(userService.findByUsername(authentication.getName()).getId(),user);
+            if (!user.getLogin().equals(""))
+                return "redirect:/logout";
+            return "redirect:/";
+     }
+     model.addAttribute("user", user);
+    return "editAccount";
 
-     return "redirect:/";
  }
     @GetMapping("/editService")
     public String editService(Model model, @RequestParam(name="id")int id){
@@ -405,18 +407,18 @@ public class UserController {
         return "editService";
     }
     @PostMapping("/updateService")
-    public String updateCompany(@RequestParam(name="id") int id,
+    public String updateService(@RequestParam(name="id") int id,
                                 @RequestParam(name="name")String name,
                                 @RequestParam(name="duration")int duration,
                                 @RequestParam(name="password")String password,Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!authentication.getCredentials().equals(password)) {
             model.addAttribute("errorText", "Incorrect password!");
-        } else if (duration <= 0){
-            model.addAttribute("errorText", "Duration cannot be a negative number!");
+        } else if (duration < 0){
+            model.addAttribute("errorText", "Duration must be a positive number!");
         }else{
             serviceService.updateService(id,name,duration);
-            return "redirect:/";
+            return "redirect:/myCompanies";
         }
         model.addAttribute("service_id",id);
         return "editService";
@@ -441,7 +443,7 @@ public String updateCompany( @RequestParam(name="id") int id,@ModelAttribute(nam
     }
      else{
         companyService.updateCompany(id,company);
-        return "redirect:/";
+        return "redirect:/myCompanies";
      }
      model.addAttribute("company_id", id);
      model.addAttribute("company", company);

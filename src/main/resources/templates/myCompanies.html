@@ -58,6 +58,7 @@
         <h2>Your companies:</h2>
         <table class="table table-striped">
             <tr>
+                <th>Services</th>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Address</th>
@@ -67,6 +68,7 @@
             </tr>
             <th:block th:each="company: ${companiesList}" >
             <tr class="accordion-toggle" data-toggle="collapse" th:attr="data-target='#accordion_'+${company.getId()}">
+                <td>+</td>
                 <td th:text="${company.getId()}"></td>
                 <td th:text="${company.getName()}"></td>
                 <td th:text="${company.getAddress()}"></td>

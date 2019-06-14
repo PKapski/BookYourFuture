@@ -42,18 +42,7 @@ public class UserServiceImpl implements UserService {
     public User findByUsername(String theUsername) {return userDAO.findByUsername(theUsername);}
 
     @Override
-    public void updateUser(User theUser, String phone, String password) {
-        userDAO.updateUser(theUser, phone, password);
-    }
-
-    @Override
-    public void updateUserPhone(User theUser, String phone) {
-        userDAO.updateUserPhone(theUser, phone);
-    }
-    @Override
-    public void updateUserPass(User theUser, String password) {
-        userDAO.updateUserPass(theUser, password);
-    }
+    public void updateUser(int id,User user){userDAO.updateUser(id,user);}
 
     @Override
     public User findByEmail(String email){return userDAO.findByEmail(email);}

@@ -71,7 +71,7 @@ public class ServiceDAOImpl implements ServiceDAO {
             Service service=session.get(Service.class,id);
             if (!name.equals(""))
                 service.setName(name);
-            if (duration>=0)
+            if (duration>0)
                 service.setDuration(duration);
             session.update(service);
             tx.commit();

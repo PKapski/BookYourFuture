@@ -20,7 +20,7 @@ public class CompanyServiceImpl implements CompanyService {
         return companyDAO.findAll();
     }
     @Override
-    public List<Company> findAllByUser(User user){return companyDAO.findAllByUser(user); }
+    public List<Company> findAllByUserId(int id){return companyDAO.findAllByUserId(id); }
 
     @Override
     public Company findById(int theId) {

@@ -15,23 +15,49 @@
         <form action="#" th:action="@{/updateUser}" th:object="${user}" method="post">
             <div class="form-group input-group">
                 <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                </div>
+                <input name="firstname" th:field="*{firstName}" class="form-control" placeholder="First name" type="text">
+            </div> <!-- form-group// -->
+
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                </div>
+                <input name="lastname" th:field="*{lastName}" class="form-control" placeholder="Last name" type="text">
+            </div> <!-- form-group// -->
+
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
                 </div>
                 <input name="phone" th:field="*{phone}" class="form-control" placeholder="Phone number" type="tel">
             </div> <!-- form-group// -->
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                    </div>
+                    <input name="email" th:field="*{email}" class="form-control" placeholder="Email" type="email">
+                </div> <!-- form-group// -->
 
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                    </div>
+                    <input name="login" th:field="*{login}" class="form-control" placeholder="Login" type="text">
+                </div> <!-- form-group// -->
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                 </div>
-                <input name="currentPassword" class="form-control" placeholder="Current password" type="password">
+                <input name="currentPassword"  class="form-control" placeholder="Current password" type="password">
             </div> <!-- form-group// -->
 
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                 </div>
-                <input name="password" th:field="*{password}" class="form-control" placeholder="New password" type="password">
+                <input name="newPassword" th:field="*{password}" class="form-control" placeholder="New password" type="password">
             </div> <!-- form-group// -->
 
             <div class="form-group input-group">
@@ -43,6 +69,7 @@
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block"> Edit Account  </button>
             </div> <!-- form-group// -->
+                <p class="text-center text-danger" ><a th:text="${errorText}"></a></p>
         </form>
     </article>
 </div> <!-- card.// -->
