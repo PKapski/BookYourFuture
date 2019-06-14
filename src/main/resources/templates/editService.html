@@ -13,22 +13,27 @@
 
 <div class="card bg-light">
     <article class="card-body mx-auto" style="max-width: 700px;">
-        <h4 class="card-title mt-3 text-center">Add service</h4>
-        <form action="#" th:action="@{/saveService(id=${company_id})}" th:object="${service}" method="post">
+        <h4 class="card-title mt-3 text-center">Edit service</h4>
+        <form action="#" th:action="@{/updateService(id=${service_id})}" method="post">
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                 </div>
-                <input name="name" th:field="*{name}" class="form-control" placeholder="Name" type="text">
+                <input name="name"  class="form-control" placeholder="Name" type="text">
             </div> <!-- form-group// -->
 
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-clock-o"></i> </span>
                 </div>
-                <input name="duration" th:field="*{duration}" class="form-control" placeholder="Duration" value="0" required type="number">
+                <input name="duration"  class="form-control" placeholder="Duration"  type="number" value="0" required>
             </div> <!-- form-group// -->
-
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                </div>
+                <input name = "password" class="form-control" placeholder="Password" type="password">
+            </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block"> Add Service </button>
             </div> <!-- form-group// -->

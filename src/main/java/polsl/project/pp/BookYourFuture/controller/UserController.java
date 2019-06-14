@@ -1,5 +1,6 @@
 package polsl.project.pp.BookYourFuture.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -112,7 +113,8 @@ public class UserController {
         }
         for(Company company: companies){
             List<Service> servicesArray;
-            servicesArray = company.getServicesCategories().get(0).getServices();
+           // servicesArray = company.getServicesCategories().get(0).getServices();
+            servicesArray = companyService.getServices(company);
             servicesMap.put(company, servicesArray);
 //            for(Service service: servicesArray){
 //                servicesMap.put(company, service);
@@ -278,6 +280,8 @@ public class UserController {
         // model.addAttribute("serviceCategory", new ServiceCategory());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user=userService.findByUsername(authentication.getName());
+        model.addAttribute("services",serviceService.findAll());
+        model.addAttribute("serviceCategory",serviceCategoryService.findAll());
         model.addAttribute("companiesList" , companyService.findAllByUser(user));
         return "myCompanies";
     }
@@ -288,7 +292,10 @@ public class UserController {
         System.out.println("categoryId " + categoryId);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println(authentication.getName());
-        if(!NumberUtils.isDigits(company.getNip())){
+        if(companyService.hasEmptyValues(company)){
+            model.addAttribute("errorText","All fields must be filled!");
+        }
+        else if(!NumberUtils.isDigits(company.getNip())){
             model.addAttribute("errorText","NIP must only be digits!");
         }else if(company.getNip().length()!=10){
             model.addAttribute("errorText","NIP must be 10 digits long!");
@@ -321,24 +328,19 @@ public class UserController {
 
     }
 
-    @GetMapping("/editAccount")
-    public String editAccount(Model model){
 
-/*        User u = null;
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            String currentLogin = authentication.getName();
-            u = userService.findByUsername(currentLogin);
-        }*/
-        model.addAttribute("user", new User());
-        return "editAccount";
-    }
     @GetMapping("/deleteCompany")
     public String deleteCompany(@RequestParam(name="id")int id){
         System.out.println("ID: -----"+id);
         companyService.deleteById(id);
         return "redirect:/";
     }
+    @GetMapping("/deleteService")
+    public String deleteService(@RequestParam(name="id") int id){
+        serviceService.deleteById(id);
+        return "redirect:/";
+    }
+
 
  /*   @PostMapping("/updateUser")
     public String updateUser(@ModelAttribute("updateUser")User user){
@@ -351,6 +353,19 @@ public class UserController {
 
         return "redirect:/";
     }*/
+
+ @GetMapping("/editAccount")
+ public String editAccount(Model model){
+
+/*        User u = null;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String currentLogin = authentication.getName();
+            u = userService.findByUsername(currentLogin);
+        }*/
+     model.addAttribute("user", new User());
+     return "editAccount";
+ }
  //@RequestMapping(method = RequestMethod.POST, value = "/updateUser")
  @PostMapping("/updateUser")
  //@ResponseBody
@@ -383,6 +398,30 @@ public class UserController {
 
      return "redirect:/";
  }
+    @GetMapping("/editService")
+    public String editService(Model model, @RequestParam(name="id")int id){
+     model.addAttribute("service_id",id);
+     model.addAttribute("errorText","");
+        return "editService";
+    }
+    @PostMapping("/updateService")
+    public String updateCompany(@RequestParam(name="id") int id,
+                                @RequestParam(name="name")String name,
+                                @RequestParam(name="duration")int duration,
+                                @RequestParam(name="password")String password,Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!authentication.getCredentials().equals(password)) {
+            model.addAttribute("errorText", "Incorrect password!");
+        } else if (duration <= 0){
+            model.addAttribute("errorText", "Duration cannot be a negative number!");
+        }else{
+            serviceService.updateService(id,name,duration);
+            return "redirect:/";
+        }
+        model.addAttribute("service_id",id);
+        return "editService";
+    }
+
     @GetMapping("/editCompany")
     public String editCompany(Model model,@RequestParam(name="id")int id){
         //System.out.println("edit"+id);
@@ -412,25 +451,31 @@ public String updateCompany( @RequestParam(name="id") int id,@ModelAttribute(nam
     public String addServicee(Model model, @RequestParam(name="id") int id){
         model.addAttribute("service" , new Service());
         model.addAttribute("company_id",id);
+        model.addAttribute("errorText","");
       //  model.addAttribute("company_id", String.valueOf(id));
         System.out.println("addService method " + id);
         return "addService";
     }
 
     @PostMapping("/saveService")
-    public String saveService(@ModelAttribute("service")Service service, @RequestParam("id") int company_id){
-
-        if(service!=null)
-            System.out.println("Service is not null");
-        System.out.println("Company_id: " + company_id);
-        if(!service.getName().equals("") && service.getDuration()!=0){
+    public String saveService(@ModelAttribute("service")Service service, @RequestParam("id") int company_id,Model model){
+        if (StringUtils.isBlank(service.getName())){
+            model.addAttribute("errorText","Service name cannot be empty!");
+        }
+        else if (service.getDuration()<=0){
+            model.addAttribute("errorText", "Duration must be a positive number!");
+        }
+        else{
             Company company = companyService.findById(company_id);
             List<ServiceCategory> serviceCategories = company.getServicesCategories();
             service.setServicesCategories(serviceCategories.get(0));
             serviceCategories.get(0).addService(service);
             serviceService.save(service);
+            return "redirect:/myCompanies";
         }
+        model.addAttribute("service" , service);
+        model.addAttribute("company_id",company_id);
+        return "addService";
 
-        return "redirect:/myCompanies";
     }
 }

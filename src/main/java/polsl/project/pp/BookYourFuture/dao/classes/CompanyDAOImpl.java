@@ -1,5 +1,6 @@
 package polsl.project.pp.BookYourFuture.dao.classes;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Query;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import polsl.project.pp.BookYourFuture.dao.interfaces.CompanyDAO;
 import polsl.project.pp.BookYourFuture.dao.interfaces.UserDAO;
 import polsl.project.pp.BookYourFuture.entities.Company;
+import polsl.project.pp.BookYourFuture.entities.Service;
 import polsl.project.pp.BookYourFuture.entities.User;
 import polsl.project.pp.BookYourFuture.services.classes.UserServiceImpl;
 import polsl.project.pp.BookYourFuture.services.interfaces.UserService;
@@ -141,6 +143,21 @@ public class CompanyDAOImpl implements CompanyDAO {
         }
 
         return "";
+    }
+    @Override
+    public List<Service> getServices(Company company){
+       return company.getServicesCategories().get(0).getServices();
+    }
+    @Override
+    public boolean hasEmptyValues(Company company){
+        if (StringUtils.isBlank(company.getName())||
+                StringUtils.isBlank(company.getNip())||
+                StringUtils.isBlank(company.getAddress())||
+                StringUtils.isBlank(company.getOpenTime())||
+                StringUtils.isBlank(company.getCloseTime())){
+            return true;
+        }
+        return false;
     }
 
 }

@@ -117,7 +117,9 @@ public class Company
         }
         servicesCategories.add(serviceCategory);
     }
-
+    public void getServices(){
+        this.getServicesCategories().get(0).getServices();
+    }
     @Override
     public String toString() {
         return "Company{" +

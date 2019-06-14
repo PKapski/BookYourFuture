@@ -1,6 +1,8 @@
 package polsl.project.pp.BookYourFuture.dao.classes;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,5 +61,27 @@ public class ServiceDAOImpl implements ServiceDAO {
         Query theQuery = session.createQuery("delete from Service where id=:theId");
         theQuery.setParameter("theId", theId);
         theQuery.executeUpdate();
+    }
+    @Override
+    public void updateService(int id, String name, int duration){
+        Session session = entityManager.unwrap(Session.class);
+        Transaction tx=null;
+        try {
+            tx = session.beginTransaction();
+            Service service=session.get(Service.class,id);
+            if (!name.equals(""))
+                service.setName(name);
+            if (duration>=0)
+                service.setDuration(duration);
+            session.update(service);
+            tx.commit();
+        }
+        catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            throw e;
+        }
+        finally {
+            session.close();
+        }
     }
 }

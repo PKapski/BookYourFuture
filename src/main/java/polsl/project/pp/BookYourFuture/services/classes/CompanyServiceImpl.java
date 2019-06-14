@@ -50,5 +50,9 @@ public class CompanyServiceImpl implements CompanyService {
     }
     @Override
     public String checkHours(String open, String close){return companyDAO.checkHours(open,close);}
+    @Override
+    public List<polsl.project.pp.BookYourFuture.entities.Service> getServices(Company company){return companyDAO.getServices(company);}
+    @Override
+    public boolean hasEmptyValues(Company company){return companyDAO.hasEmptyValues(company);}
 }
 
