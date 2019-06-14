@@ -114,19 +114,39 @@
                         <th>Available services</th>
 
                     </tr>
-                    <tr th:each="company: ${companies}">
+                    <th:block th:each="company: ${companies}" >
+                    <tr >
                         <td th:text="${company.getName()}"></td>
                         <td th:text="${company.getOpenTime()}"></td>
                         <td th:text="${company.getCloseTime()}"></td>
                         <td th:text="${company.getServicesCategories().get(0).getCategoryName()}"></td>
-                        <td>
-                            <span th:each="service: ${servicesMap.get(company)}">
-                                <a th:href="@{'/bookService/' + ${service.getId()}}"><p th:text="${service.getName()}"></p></a>
-                            </span>
-                        </td>
-<!--                        <td><a class="nav-link" href="/editCompany">Book</a></td>-->
+<!--                        <td>-->
+<!--                            <span th:each="service: ${servicesMap.get(company)}">-->
+<!--                                <a th:href="@{'/bookService/' + ${service.getId()}}"><p th:text="${service.getName()}"></p></a>-->
+<!--                            </span>-->
+<!--                        </td>-->
+                        <td style="text-align:center; " class="accordion-toggle" data-toggle="collapse" th:attr="data-target='#accordion_'+${company.getId()}"><i class="fa fa-plus" aria-hidden="true"></i></td>
                     </tr>
 
+                        <tr class="hiddenRow">
+
+                            <td colspan="6">
+                                <div th:id="'accordion_'+${company.getId()}" class="accordion-body collapse" >
+                                    <h4 th:text="${company.getName()}+' services:'"></h4>
+                                    <table class="table">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Duration</th>
+                                        </tr>
+                                    <tr th:each="service: ${servicesMap.get(company)}">
+                                    <td><a th:text="${service.getName()}" th:href="@{'/bookService/' + ${service.getId()}}"></a></td>
+                                    <td th:text="${service.getDuration()}"></td>
+                                    </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </th:block>
                 </table>
             </div>
         </div>
