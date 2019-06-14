@@ -414,9 +414,7 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!authentication.getCredentials().equals(password)) {
             model.addAttribute("errorText", "Incorrect password!");
-        } else if (duration < 0){
-            model.addAttribute("errorText", "Duration must be a positive number!");
-        }else{
+        } else{
             serviceService.updateService(id,name,duration);
             return "redirect:/myCompanies";
         }
@@ -451,7 +449,9 @@ public String updateCompany( @RequestParam(name="id") int id,@ModelAttribute(nam
 }
     @GetMapping("/addServicee")
     public String addServicee(Model model, @RequestParam(name="id") int id){
-        model.addAttribute("service" , new Service());
+        Service service  = new Service();
+        service.setDuration(1);
+        model.addAttribute("service" , service);
         model.addAttribute("company_id",id);
         model.addAttribute("errorText","");
       //  model.addAttribute("company_id", String.valueOf(id));
@@ -463,11 +463,7 @@ public String updateCompany( @RequestParam(name="id") int id,@ModelAttribute(nam
     public String saveService(@ModelAttribute("service")Service service, @RequestParam("id") int company_id,Model model){
         if (StringUtils.isBlank(service.getName())){
             model.addAttribute("errorText","Service name cannot be empty!");
-        }
-        else if (service.getDuration()<=0){
-            model.addAttribute("errorText", "Duration must be a positive number!");
-        }
-        else{
+        } else{
             Company company = companyService.findById(company_id);
             List<ServiceCategory> serviceCategories = company.getServicesCategories();
             service.setServicesCategories(serviceCategories.get(0));
