@@ -266,7 +266,7 @@ public class UserController {
     @GetMapping("/addCompany")
     public String addCompany(Model model){
         model.addAttribute("company" , new Company());
-
+        model.addAttribute("errorText","");
         //int categoryId;
         List<Category> categories = categoryService.findAll();
         model.addAttribute("categories", categories);
@@ -283,25 +283,42 @@ public class UserController {
     }
 
     @PostMapping("/saveCompany")
-    public String saveCompany(@ModelAttribute("company")Company company,@RequestParam("categoryId") int categoryId){
-
+    public String saveCompany(@ModelAttribute("company")Company company,@RequestParam("categoryId") int categoryId,Model model){
+        String msg="";
         System.out.println("categoryId " + categoryId);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println(authentication.getName());
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            companyService.save(company,authentication.getName());
-             ServiceCategory serviceCategory;
-             Category category = new Category(categoryService.findById(categoryId).getCategoryName());
-             serviceCategory = new ServiceCategory();
-             serviceCategory.setCategoryName(category.getCategoryName());
-             serviceCategory.setCompany(company);
-             company.addServiceCategory(serviceCategory);
-             serviceCategoryService.save(serviceCategory);
+        if(!NumberUtils.isDigits(company.getNip())){
+            model.addAttribute("errorText","NIP must only be digits!");
+        }else if(company.getNip().length()!=10){
+            model.addAttribute("errorText","NIP must be 10 digits long!");
         }
-        List<String> categoriesList = serviceCategoryService.findAllName();
-        categories = categoriesList.toArray(new String[0]);
+        else if(companyService.findByNIP(company.getNip())!=null){
+            model.addAttribute("errorText","Company with that NIP already exists!");
+        }
+        else if(!(msg = companyService.checkHours(company.getOpenTime(), company.getCloseTime())).equals("")){
+            model.addAttribute("errorText",msg);
+        }
+        else {
+            if (!(authentication instanceof AnonymousAuthenticationToken)) {
+                companyService.save(company, authentication.getName());
+                ServiceCategory serviceCategory;
+                Category category = new Category(categoryService.findById(categoryId).getCategoryName());
+                serviceCategory = new ServiceCategory();
+                serviceCategory.setCategoryName(category.getCategoryName());
+                serviceCategory.setCompany(company);
+                company.addServiceCategory(serviceCategory);
+                serviceCategoryService.save(serviceCategory);
+            }
+            List<String> categoriesList = serviceCategoryService.findAllName();
+            categories = categoriesList.toArray(new String[0]);
+            return "redirect:/";
+        }
+        List<Category> categories = categoryService.findAll();
+        model.addAttribute("categories", categories);
+        model.addAttribute("company" , company);
+        return "addCompany";
 
-        return "redirect:/";
     }
 
     @GetMapping("/editAccount")

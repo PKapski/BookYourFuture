@@ -48,6 +48,7 @@ public class CompanyServiceImpl implements CompanyService {
     public Company findByName(String name){
         return companyDAO.findByName(name);
     }
-
+    @Override
+    public String checkHours(String open, String close){return companyDAO.checkHours(open,close);}
 }
 

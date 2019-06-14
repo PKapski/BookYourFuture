@@ -22,4 +22,6 @@ public interface CompanyDAO {
 
     public void updateCompany(int id,Company company); //id is id of company that will be updated
 
+    public String checkHours(String open, String close);
+
 }
