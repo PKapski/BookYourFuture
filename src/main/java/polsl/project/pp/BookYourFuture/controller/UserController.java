@@ -193,13 +193,6 @@ public class UserController {
         serviceTimeList = new ArrayList<>();
         int serviceDuration = service.getDuration();
 
-        //filling the board with possible hours
-        while(companyStart.isBefore(companyEnd)){
-            LocalTime companyEndTmp = companyStart.plusMinutes(serviceDuration);
-            serviceTimeList.add(new ServiceTime(companyStart, companyEndTmp));
-            companyStart = companyEndTmp;
-        }
-
         List<Timetable> timetableList = new ArrayList<>();
         ServiceCategory serviceCategory = service.getServicesCategories();
         //list of services which are assigned to a specific company
@@ -211,33 +204,38 @@ public class UserController {
             System.out.println(timetableList);
         }
 
-        if(timetableList.size()>0){
-            for(Timetable timetable :timetableList){
+        boolean isBusy = false;
 
-                //start and end time of service which is booked
-                LocalTime startTime = LocalTime.parse(timetable.getStartTime(), DateTimeFormatter.ofPattern("HH:mm:ss"));
-                LocalTime endTime = LocalTime.parse(timetable.getEndTime(), DateTimeFormatter.ofPattern("HH:mm:ss"));
+        //filling the board with possible hours
+        while(companyStart.plusMinutes(serviceDuration).isBefore(companyEnd)){
+            LocalTime companyEndTmp = companyStart.plusMinutes(serviceDuration);
+            if(timetableList.size() > 0){
+                for(Timetable timetable : timetableList){
+                    LocalTime startTime = LocalTime.parse(timetable.getStartTime(), DateTimeFormatter.ofPattern("HH:mm:ss"));
+                    LocalTime endTime = LocalTime.parse(timetable.getEndTime(), DateTimeFormatter.ofPattern("HH:mm:ss"));
 
-                //
-                //iterating through the list of available hours for a specific service
-                Iterator<ServiceTime> serviceTimeIterator = serviceTimeList.iterator();
-                while(serviceTimeIterator.hasNext()){
-                    ServiceTime serviceTime = serviceTimeIterator.next();
-                    if(((serviceTime.getStartTime().isBefore(startTime) || serviceTime.getStartTime().equals(startTime))
-                            && (serviceTime.getEndTime().isAfter(startTime)))
-                    || ((serviceTime.getStartTime().isBefore(endTime) || serviceTime.getEndTime().equals(endTime))
-                            && (serviceTime.getEndTime().isAfter(endTime)))
-                            || ((startTime.isBefore(serviceTime.getStartTime()) && endTime.isAfter(serviceTime.getEndTime())))){
-
-                            //deletion of the term when it coincides with the date of the reserved service
-                            serviceTimeIterator.remove();
-                            System.out.println("ServiceTime removed! " + serviceTime);
+                    if(((companyStart.isBefore(startTime) || companyStart.equals(startTime))
+                            && (companyEndTmp.isAfter(startTime)))
+                            || ((companyStart.isBefore(endTime) || companyEndTmp.equals(endTime))
+                            && (companyEndTmp.isAfter(endTime)))
+                            || (((startTime.isBefore(companyStart) || startTime.equals(companyStart))
+                            && (endTime.isAfter(companyEndTmp) || endTime.equals(companyEndTmp))))){
+                        isBusy=true;
+                        companyStart = endTime;
+                        break;
                     }
                 }
+                if(!isBusy){
+                    serviceTimeList.add(new ServiceTime(companyStart,companyEndTmp));
+                    companyStart = companyEndTmp;
+                }
+                isBusy = false;
+            }else{
+                serviceTimeList.add(new ServiceTime(companyStart,companyEndTmp));
+                companyStart = companyEndTmp;
             }
-        }else{
-            System.out.println("Timetable is empty in that date");
         }
+
         model.addAttribute("serviceTimeList", serviceTimeList);
         model.addAttribute("service_id", service_id);
         model.addAttribute("datetime", datetime);
