@@ -271,6 +271,7 @@ public class UserController {
         model.addAttribute("errorText","");
         List<Category> categories = categoryService.findAll();
         model.addAttribute("categories", categories);
+        this.categoryId = 0;
         model.addAttribute("categoryId", this.categoryId);
         return "addCompany";
     }
