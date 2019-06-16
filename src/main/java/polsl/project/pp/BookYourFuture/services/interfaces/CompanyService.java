@@ -28,4 +28,6 @@ public interface CompanyService {
     public List<Service> getServices(Company company);
 
     public boolean hasEmptyValues(Company company);
+
+    public String checkHours(String hour);
 }
