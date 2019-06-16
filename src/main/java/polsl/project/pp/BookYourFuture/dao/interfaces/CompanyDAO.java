@@ -29,4 +29,6 @@ public interface CompanyDAO {
 
     public boolean hasEmptyValues(Company company);
 
+    public String checkHours(String hour);
+
 }

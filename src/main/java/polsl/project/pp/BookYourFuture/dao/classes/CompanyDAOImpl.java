@@ -124,7 +124,7 @@ public class CompanyDAOImpl implements CompanyDAO {
     }
     @Override
     public String checkHours(String open, String close){
-        if (open.length()!=5 || close.length()!=5)
+        if (open.trim().length()!=5 || close.trim().length()!=5)
             return "Hours must be in format HH:MM";
         else if (open.charAt(2)!=':' || close.charAt(2)!=':')
             return "Hours must be in format HH:MM";
@@ -138,6 +138,25 @@ public class CompanyDAOImpl implements CompanyDAO {
                     return "Opening minutes must be between 0 and 59";
                 else if (Integer.parseInt(close.substring(3, 5)) > 59 || Integer.parseInt(close.substring(0, 2)) < 0)
                     return "Opening minutes must be between 0 and 59";
+            }catch (Exception e){
+                return "Hours and minutes values must be numeric!";
+            }
+        }
+
+        return "";
+    }
+    @Override
+    public String checkHours(String hour){
+        if (hour.trim().length()!=5)
+            return "Hours must be in format HH:MM";
+        else if (hour.charAt(2)!=':')
+            return "Hours must be in format HH:MM";
+        else {
+            try {
+                if (Integer.parseInt(hour.substring(0, 2)) > 24 || Integer.parseInt(hour.substring(0, 2)) < 0)
+                    return "Hours must be between 0 and 24";
+                else if (Integer.parseInt(hour.substring(3, 5)) > 59 || Integer.parseInt(hour.substring(0, 2)) < 0)
+                    return "Minutes must be between 0 and 59";
             }catch (Exception e){
                 return "Hours and minutes values must be numeric!";
             }
