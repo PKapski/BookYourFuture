@@ -39,6 +39,8 @@ public class UserController {
 
     private String[] categories;
 
+    private int categoryId = 0;
+
     @Autowired
     public UserController(UserService userService, CompanyService companyService, ServiceCategoryService serviceCategoryService, ServiceService serviceService, TimetableService timetableService, CategoryService categoryService) {
         this.userService = userService;
@@ -207,7 +209,7 @@ public class UserController {
         boolean isBusy = false;
 
         //filling the board with possible hours
-        while(companyStart.plusMinutes(serviceDuration).isBefore(companyEnd)){
+        while(companyStart.plusMinutes(serviceDuration).isBefore(companyEnd) || companyStart.plusMinutes(serviceDuration).equals(companyEnd)){
             LocalTime companyEndTmp = companyStart.plusMinutes(serviceDuration);
             if(timetableList.size() > 0){
                 for(Timetable timetable : timetableList){
@@ -267,15 +269,13 @@ public class UserController {
     public String addCompany(Model model){
         model.addAttribute("company" , new Company());
         model.addAttribute("errorText","");
-        //int categoryId;
         List<Category> categories = categoryService.findAll();
         model.addAttribute("categories", categories);
-        //model.addAttribute("categoryId", categoryId);
+        model.addAttribute("categoryId", this.categoryId);
         return "addCompany";
     }
     @GetMapping("/myCompanies")
     public String myCompanies(Model model){
-        // model.addAttribute("serviceCategory", new ServiceCategory());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user=userService.findByUsername(authentication.getName());
         model.addAttribute("services",serviceService.findAll());
@@ -288,6 +288,9 @@ public class UserController {
     public String saveCompany(@ModelAttribute("company")Company company,@RequestParam("categoryId") int categoryId,Model model){
         String msg="";
         System.out.println("categoryId " + categoryId);
+        if(categoryId>=0){
+            this.categoryId=categoryId;
+        }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println(authentication.getName());
         if(companyService.hasEmptyValues(company)){
@@ -322,6 +325,7 @@ public class UserController {
         List<Category> categories = categoryService.findAll();
         model.addAttribute("categories", categories);
         model.addAttribute("company" , company);
+        model.addAttribute("categoryId", this.categoryId);
         return "addCompany";
 
     }

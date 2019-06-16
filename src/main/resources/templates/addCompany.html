@@ -41,10 +41,11 @@
                     <span class="input-group-text"> <i class="fa fa-book"></i></span>
                 </div>
 <!--                <input name="categoryName"  class="form-control" placeholder="Service category" type="text">-->
-                <select name="categoryId" class="form-control">
+                <select name="categoryId" th:value="${categoryId}" class="form-control">
                     <option th:each="category:${categories}"
                         th:value="${category.getId()}"
-                        th:utext="${category.getCategoryName()}"/>
+                        th:utext="${category.getCategoryName()}"
+                        th:selected="${categoryId}==${category.getId()}"/>
                 </select>
             </div> <!-- form-group// -->
 
