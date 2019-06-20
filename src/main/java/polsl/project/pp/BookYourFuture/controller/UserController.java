@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import polsl.project.pp.BookYourFuture.entities.*;
 import polsl.project.pp.BookYourFuture.services.interfaces.*;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+import java.io.FileNotFoundException;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -258,6 +262,27 @@ public class UserController {
             timetable.setServices(service);
             timetable.setUser(user);
             timetableService.save(timetable);
+        }
+//        ScriptEngineManager manager = new ScriptEngineManager();
+//        ScriptEngine engine = manager.getEngineByName("JavaScript");
+//        try {
+//            engine.eval("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
+//            engine.eval("function alert(){\n" +
+//                    "    swal({\n" +
+//                    "        title: \"Success\",\n" +
+//                    "        text: \"You registered\",\n" +
+//                    "        icon: \"success\",\n" +
+//                    "        button: \"Ok!\",\n" +
+//                    "    });\n" +
+//                    "};\n" +
+//                    "alert(this.alert);");
+//        } catch (ScriptException e) {
+//            e.printStackTrace();
+//        }
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         return "redirect:/";
     }

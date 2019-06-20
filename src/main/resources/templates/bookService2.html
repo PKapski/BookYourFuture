@@ -97,6 +97,7 @@
                         }
                     }
                 }
+
             </script>
         </div>
     </div>
@@ -119,7 +120,7 @@
                     <tr th:each="serviceTime: ${serviceTimeList}">
                         <td style="display:table-cell; vertical-align:middle;" th:text="${serviceTime.getStartTime().toString()}"></td>
                         <td th:text="${serviceTime.getEndTime().toString()}"></td>
-                        <td><a class="nav-link" th:href="@{/saveDate(serviceTimeId=${serviceTimeList.indexOf(serviceTime)}, service_id=${service_id}, datetime=${datetime})}">Choose</a></td>
+                        <td><a class="nav-link" id="submit" th:href="@{/saveDate(serviceTimeId=${serviceTimeList.indexOf(serviceTime)}, service_id=${service_id}, datetime=${datetime})}">Choose</a></td>
                     </tr>
                 </table>
             </div>
@@ -128,6 +129,21 @@
 </div>
 
 </div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+     function func(){
+        swal({
+            title: "Success",
+            text: "You signed up for this service",
+            icon: "success",
+            button: "Ok!",
+        });
+    }
+    document.getElementById("submit").addEventListener("click", func);
+</script>
 
 
 </body>
