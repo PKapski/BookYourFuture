@@ -530,6 +530,6 @@ public class UserController {
         System.out.println("timetable id" + timeTableId);
         timetableService.deleteById(timeTableId);
 
-        return "redirect:/";
+        return "redirect:/myReservations";
     }
 }
