@@ -17,6 +17,7 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.io.FileNotFoundException;
 import java.security.Principal;
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -509,5 +510,26 @@ public class UserController {
         model.addAttribute("company_id", company_id);
         return "addService";
 
+    }
+
+    @GetMapping("/myReservations")
+    public String myReservations(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findByUsername(authentication.getName());
+
+        List<Timetable> timetableList = timetableService.getByUser(user);
+        Collections.sort(timetableList);
+
+        model.addAttribute("timeTableList", timetableList);
+
+        return "myReservations";
+    }
+
+    @GetMapping("deleteReservation")
+    public String deleteReservations(@RequestParam("id") int timeTableId){
+        System.out.println("timetable id" + timeTableId);
+        timetableService.deleteById(timeTableId);
+
+        return "redirect:/";
     }
 }

@@ -3,6 +3,7 @@ package polsl.project.pp.BookYourFuture.services.interfaces;
 import polsl.project.pp.BookYourFuture.entities.Company;
 import polsl.project.pp.BookYourFuture.entities.Service;
 import polsl.project.pp.BookYourFuture.entities.Timetable;
+import polsl.project.pp.BookYourFuture.entities.User;
 
 import java.util.List;
 
@@ -18,4 +19,7 @@ public interface TimetableService {
     public void save(Timetable theTimetable);
 
     public void deleteById(int theId);
+
+    public List<Timetable> getByUser(User user);
+
 }

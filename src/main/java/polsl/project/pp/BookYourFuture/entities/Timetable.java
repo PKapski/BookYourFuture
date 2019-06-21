@@ -3,10 +3,11 @@ package polsl.project.pp.BookYourFuture.entities;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.sql.Time;
 
 @Entity
 @Table(name = "timetable")
-public class Timetable {
+public class Timetable implements Comparable<Timetable>  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,6 +61,11 @@ public class Timetable {
 
     public User getUser() {return user;}
     public void setUser(User user) {this.user = user;}
+
+    @Override
+    public int compareTo(Timetable o) {
+        return getDate().compareTo(o.getDate());
+    }
 
     @Override
     public String toString(){

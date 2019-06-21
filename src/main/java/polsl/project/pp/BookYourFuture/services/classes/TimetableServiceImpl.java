@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import polsl.project.pp.BookYourFuture.dao.interfaces.TimetableDAO;
 import polsl.project.pp.BookYourFuture.entities.Service;
 import polsl.project.pp.BookYourFuture.entities.Timetable;
+import polsl.project.pp.BookYourFuture.entities.User;
 import polsl.project.pp.BookYourFuture.services.interfaces.TimetableService;
 
 import java.util.List;
@@ -45,4 +46,10 @@ public class TimetableServiceImpl implements TimetableService {
     public void deleteById(int theId) {
         timetableDAO.deleteById(theId);
     }
+
+    @Override
+    public List<Timetable> getByUser(User user){
+        return timetableDAO.getByUser(user);
+    }
+
 }
