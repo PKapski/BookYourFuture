@@ -30,6 +30,10 @@ public class ServiceCategoryServiceImpl implements ServiceCategoryService {
         return serviceCategoryDAO.findByName(categoryName);
     }
 
+    public List<String> findAllName(){
+        return serviceCategoryDAO.findAllName();
+    }
+
     @Override
     public void save(ServiceCategory theServiceCategory) {
         serviceCategoryDAO.save(theServiceCategory);

@@ -1,5 +1,6 @@
 package polsl.project.pp.BookYourFuture.services.interfaces;
 
+import polsl.project.pp.BookYourFuture.entities.Company;
 import polsl.project.pp.BookYourFuture.entities.Service;
 import polsl.project.pp.BookYourFuture.entities.ServiceCategory;
 
@@ -15,4 +16,7 @@ public interface ServiceService {
     public void save(Service theService);
 
     public void deleteById(int theId);
+
+    public void updateService(int id, String name, int duration);
+
 }

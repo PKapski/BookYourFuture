@@ -3,6 +3,7 @@ package polsl.project.pp.BookYourFuture.services.classes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import polsl.project.pp.BookYourFuture.dao.interfaces.ServiceDAO;
+import polsl.project.pp.BookYourFuture.entities.Company;
 import polsl.project.pp.BookYourFuture.entities.ServiceCategory;
 import polsl.project.pp.BookYourFuture.services.interfaces.ServiceService;
 
@@ -39,4 +40,7 @@ public class ServiceServiceImpl implements ServiceService {
     public void deleteById(int theId) {
         serviceDao.deleteById(theId);
     }
+    @Override
+    public void updateService(int id, String name, int duration){serviceDao.updateService(id,name,duration);}
+
 }

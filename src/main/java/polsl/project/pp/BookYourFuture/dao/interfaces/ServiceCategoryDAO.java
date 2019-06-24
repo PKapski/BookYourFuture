@@ -11,6 +11,8 @@ public interface ServiceCategoryDAO {
 
     public List<ServiceCategory> findByName(String categoryName);
 
+    public List<String> findAllName();
+
     public void save(ServiceCategory theService);
 
     public void deleteById(int theId);

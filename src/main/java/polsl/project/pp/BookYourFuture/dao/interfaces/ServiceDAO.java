@@ -15,4 +15,6 @@ public interface ServiceDAO {
     public void save( Service theService);
 
     public void deleteById(int theId);
+
+    public void updateService(int id, String name, int duration);
 }

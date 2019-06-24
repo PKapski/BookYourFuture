@@ -1,6 +1,7 @@
 package polsl.project.pp.BookYourFuture.services.interfaces;
 
 import polsl.project.pp.BookYourFuture.entities.Company;
+import polsl.project.pp.BookYourFuture.entities.Service;
 import polsl.project.pp.BookYourFuture.entities.User;
 
 import java.util.List;
@@ -8,10 +9,9 @@ import java.util.List;
 public interface CompanyService {
     public List<Company> findAll();
 
-    public List<Company> findAllByUser(User user);
+    public List<Company> findAllByUserId(int id);
 
     public Company findById(int theId);
-
 
     public void save(Company theCompany, String theUsername);
 
@@ -22,4 +22,12 @@ public interface CompanyService {
     public Company findByName(String name);
 
     public void updateCompany(int id,Company company);//id is id of company that will be updated
+
+    public String checkHours(String open, String close);
+
+    public List<Service> getServices(Company company);
+
+    public boolean hasEmptyValues(Company company);
+
+    public String checkHours(String hour);
 }

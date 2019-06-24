@@ -33,6 +33,17 @@ public class ServiceCategoryDAOImpl implements ServiceCategoryDAO {
     }
 
     @Override
+    public List<String> findAllName(){
+        Session session = entityManager.unwrap(Session.class);
+
+        Query<String> theQuery = session.createQuery("select distinct categoryName from ServiceCategory", String.class);
+
+        List<String> serviceCategoriesName = theQuery.getResultList();
+
+        return serviceCategoriesName;
+    }
+
+    @Override
     public ServiceCategory findById(int theId) {
         Session session = entityManager.unwrap(Session.class);
 

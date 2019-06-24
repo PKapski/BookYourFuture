@@ -5,8 +5,10 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import polsl.project.pp.BookYourFuture.dao.interfaces.TimetableDAO;
+import polsl.project.pp.BookYourFuture.entities.Company;
 import polsl.project.pp.BookYourFuture.entities.Service;
 import polsl.project.pp.BookYourFuture.entities.Timetable;
+import polsl.project.pp.BookYourFuture.entities.User;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -32,11 +34,12 @@ public class TimetableDAOImpl implements TimetableDAO {
     public void deleteById(int theId) {
         Session session = entityManager.unwrap(Session.class);
 
-        Query theQuery = session.createQuery("delete from Timetable where id=:theId");
+        session.beginTransaction();
 
-        theQuery.setParameter("theId", theId);
+        session.delete(findById(theId));
 
-        theQuery.executeUpdate();
+        session.getTransaction().commit();
+
     }
 
     @Override
@@ -63,5 +66,23 @@ public class TimetableDAOImpl implements TimetableDAO {
         return session.createQuery("from Timetable where service=:service")
                 .setParameter("service",service).getResultList();
 
+    }
+
+    @Override
+    public List<Timetable> findByServiceAndDate(String theDate, Service service) {
+        Session session = entityManager.unwrap(Session.class);
+        return session.createQuery("from Timetable where service=:service and date=:date")
+                .setParameter("date", theDate)
+                .setParameter("service", service)
+                .getResultList();
+
+    }
+
+    @Override
+    public List<Timetable> getByUser(User user){
+        Session session = entityManager.unwrap(Session.class);
+        return session.createQuery("from Timetable where user=:user")
+                .setParameter("user", user)
+                .getResultList();
     }
 }

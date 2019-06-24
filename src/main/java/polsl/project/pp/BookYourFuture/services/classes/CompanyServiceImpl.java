@@ -20,7 +20,7 @@ public class CompanyServiceImpl implements CompanyService {
         return companyDAO.findAll();
     }
     @Override
-    public List<Company> findAllByUser(User user){return companyDAO.findAllByUser(user); }
+    public List<Company> findAllByUserId(int id){return companyDAO.findAllByUserId(id); }
 
     @Override
     public Company findById(int theId) {
@@ -48,6 +48,13 @@ public class CompanyServiceImpl implements CompanyService {
     public Company findByName(String name){
         return companyDAO.findByName(name);
     }
-
+    @Override
+    public String checkHours(String open, String close){return companyDAO.checkHours(open,close);}
+    @Override
+    public List<polsl.project.pp.BookYourFuture.entities.Service> getServices(Company company){return companyDAO.getServices(company);}
+    @Override
+    public boolean hasEmptyValues(Company company){return companyDAO.hasEmptyValues(company);}
+    @Override
+    public String checkHours(String hour){return companyDAO.checkHours(hour);}
 }
 

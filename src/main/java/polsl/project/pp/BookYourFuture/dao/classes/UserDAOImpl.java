@@ -1,8 +1,10 @@
 package polsl.project.pp.BookYourFuture.dao.classes;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
@@ -103,41 +105,38 @@ public class UserDAOImpl implements UserDAO {
             return user;
         }catch(Exception e){return null;}
     }
-    @Override
-    @Transactional
-    public void updateUser(User theUser, String phone, String password){
-        Session session = entityManager.unwrap(Session.class);
-        int id_user = theUser.getId();
-        password = "{noop}" + password;
-        Query<User> theQuery = session.createQuery("update User SET phone=:phone, password=:password where id=:id_user");
-        theQuery.setParameter("phone", phone);
-        theQuery.setParameter("password", password);
-        theQuery.setParameter("id_user", id_user);
-        theQuery.executeUpdate();
-
-    }
 
     @Override
-    @Transactional
-    public void updateUserPhone(User theUser, String phone){
+    public void updateUser(int id,User user){
         Session session = entityManager.unwrap(Session.class);
-        int id_user = theUser.getId();
-        Query<User> theQuery = session.createQuery("update User SET phone=:phone where id=:id_user");
-        theQuery.setParameter("phone", phone);
-        theQuery.setParameter("id_user", id_user);
-        theQuery.executeUpdate();
-    }
-
-    @Override
-    @Transactional
-    public void updateUserPass(User theUser, String password){
-        Session session = entityManager.unwrap(Session.class);
-        int id_user = theUser.getId();
-        password = "{noop}" + password;
-        Query<User> theQuery = session.createQuery("update User SET password=:password where id=:id_user");
-        theQuery.setParameter("password", password);
-        theQuery.setParameter("id_user", id_user);
-        theQuery.executeUpdate();
+        Transaction tx=null;
+        try {
+            tx = session.beginTransaction();
+            User currUser = session.get(User.class,id);
+            if (!user.getFirstName().equals(""))
+                currUser.setFirstName(user.getFirstName());
+            if (!user.getLastName().equals(""))
+                currUser.setLastName(user.getLastName());
+            if (!user.getPhone().equals(""))
+                currUser.setPhone(user.getPhone());
+            if (!user.getEmail().equals(""))
+                currUser.setEmail(user.getEmail());
+            if (!user.getLogin().equals("")) {
+                currUser.setLogin(user.getLogin());
+            }
+            if (!user.getPassword().equals("")){
+                currUser.setPassword("{noop}"+ user.getPassword());
+            }
+            session.update(currUser);
+            tx.commit();
+        }
+        catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            throw e;
+        }
+        finally {
+            session.close();
+        }
     }
     @Override
     public boolean hasEmptyValues(User user){

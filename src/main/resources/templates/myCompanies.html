@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
+
     <link rel="stylesheet" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
     <script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script th:src="@{webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
 
+    <script src="/js/myCompanies.js"></script>
     <meta charset="UTF-8">
     <title>My Companies</title>
 
@@ -28,7 +31,7 @@
     <div sec:authorize="!isAuthenticated()">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="registerUser"><i class="fas fa-user"></i> Sign Up</a>
+                <a class="nnipav-link" href="registerUser"><i class="fas fa-user"></i> Sign Up</a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
@@ -42,6 +45,7 @@
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="/addCompany">Add Company</a>
                     <a class="dropdown-item" href="/myCompanies">My Companies</a>
+                    <a class="dropdown-item" href="/myReservations">My Reservations</a>
                     <a class="dropdown-item" href="/editAccount">Edit account</a>
                     <a class="dropdown-item" href="/logout">Logout</a>
                 </div>
@@ -55,6 +59,7 @@
         <h2>Your companies:</h2>
         <table class="table table-striped">
             <tr>
+                <th>Services</th>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Address</th>
@@ -62,7 +67,9 @@
                 <th>Open time</th>
                 <th>Close time</th>
             </tr>
-            <tr th:each="company: ${companiesList}">
+            <th:block th:each="company: ${companiesList}" >
+            <tr >
+                <td style="text-align:center; " class="accordion-toggle" data-toggle="collapse" th:attr="data-target='#accordion_'+${company.getId()}"><i class="fa fa-plus" aria-hidden="true"></i></td>
                 <td th:text="${company.getId()}"></td>
                 <td th:text="${company.getName()}"></td>
                 <td th:text="${company.getAddress()}"></td>
@@ -72,7 +79,45 @@
                 <td><a class="nav-link" th:href="@{/editCompany(id=${company.getId()})}">Edit</a></td>
                 <td><a class="nav-link" th:href="@{/deleteCompany(id=${company.getId()})}">Delete</a></td>
                 <td><a class="nav-link" th:href="@{/addServicee(id=${company.getId()})}">Add service</a></td>
+                <td></td>
             </tr>
+
+                <tr class="hiddenRow">
+
+                    <td colspan="6">
+                        <div th:id="'accordion_'+${company.getId()}" class="accordion-body collapse" >
+                            <h4 th:text="${company.getName()}+' services:'"></h4>
+                            <table class="table">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Duration</th>
+                                </tr>
+                                    <th:block th:each="serviceCat: ${serviceCategory}">
+                                <span th:if="${serviceCat.getCompany()==company}">
+                            <th:block th:each="service: ${services}">
+                                <span th:if="${service.getServicesCategories()==serviceCat}">
+                                    <tr>
+                                    <td th:text="${service.getName()}"></td>
+                                    <td th:text="${service.getDuration()}"></td>
+                                    <td><a class="nav-link" th:href="@{/editService(id=${service.getId()})}">Edit</a></td>
+                                    <td><a class="nav-link" th:href="@{/deleteService(id=${service.getId()})}">Delete</a></td>
+                                    </tr>
+
+                                </span>
+                            </th:block>
+                                </span>
+                                    </th:block>
+
+                            </table>
+
+
+                        </div>
+                    </td>
+                </tr>
+
+            </th:block>
+
+
 
         </table>
     </div>

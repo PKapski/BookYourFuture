@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-     <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <title>BookYourFuture</title>
 
     <script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
@@ -35,14 +35,14 @@
             <a class="nav-link" href="/contact">Contact</a>
     </ul>
     <div sec:authorize="!isAuthenticated()">
-    <ul class="navbar-nav">
-        <li class="nav-item active">
-            <a class="nav-link" href="registerUser"><i class="fas fa-user"></i> Sign Up</a>
-        </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
-        </li>
-    </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="registerUser"><i class="fas fa-user"></i> Sign Up</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
+            </li>
+        </ul>
     </div>
     <div sec:authorize="isAuthenticated()">
         <ul class="navbar-nav">
@@ -76,10 +76,10 @@
                 <a class="nav-link list-group-item list-group-item-action" th:href="@{/choiceService(category=${item})}" >{{item}}</a>
             </div> -->
             <div>
-              <dl id="myDL">
+                <dl id="myDL">
                     <tr th:each="category: ${categories} ">
-                    <ld ><a class="nav-link list-group-item list-group-item-action" th:href="@{/choiceService(category=${category},categories=${categories})}" ><td th:text="${category}"></td></a></ld>
-               </dl>
+                        <ld><a class="nav-link list-group-item list-group-item-action" th:href="@{/choiceService(category=${category},categories=${categories})}" ><td th:text="${category}"></td></a></ld>
+                </dl>
             </div>
             <script>
                 function myFunction() {
@@ -98,11 +98,53 @@
                         }
                     }
                 }
-            </script>
 
+            </script>
+        </div>
+    </div>
+    <div class="container" align="center">
+        <div class="col-lg-8">
+            <div align="center">
+            <form th:action="@{'/bookServiceAction/' + ${service_id}}">
+                <input class="input-group-text form-control-lg" size="18" th:type="date" name="datetime"><br>
+                <input class="btn btn-primary" th:type="submit" name="submit" th:value="Select">
+            </form>
+            <br>
+            </div>
+            <div th:if="${not #lists.isEmpty(serviceTimeList)}">
+                <h2 align="left">Available hours for that service </h2>
+                <table class="table table-striped">
+                    <tr>
+                        <th>Start time</th>
+                        <th>End time</th>
+                    </tr>
+                    <tr th:each="serviceTime: ${serviceTimeList}">
+                        <td style="display:table-cell; vertical-align:middle;" th:text="${serviceTime.getStartTime().toString()}"></td>
+                        <td th:text="${serviceTime.getEndTime().toString()}"></td>
+                        <td><a class="nav-link submit" th:href="@{/saveDate(serviceTimeId=${serviceTimeList.indexOf(serviceTime)}, service_id=${service_id}, datetime=${datetime})}">Choose</a></td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 </div>
+
+</div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+     function func(){
+        swal({
+            title: "Success",
+            text: "You signed up for this service",
+            icon: "success",
+            button: "Ok!",
+        });
+    }
+    var list = document.querySelectorAll(".submit");
+    for(var listElement of list){
+        listElement.addEventListener("click", func);
+    }
+</script>
 
 
 </body>
