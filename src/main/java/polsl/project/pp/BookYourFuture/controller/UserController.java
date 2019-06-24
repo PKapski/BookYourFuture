@@ -131,7 +131,7 @@ public class UserController {
         return "choiceService";
     }
 
-    @GetMapping("/bookedServices/{service_id}")
+    @GetMapping("/bookService/{service_id}")
     public String bookService(Model model, @PathVariable(value = "service_id") int service_id) {
         model.addAttribute("service_id", service_id);
         model.addAttribute("error", false);
