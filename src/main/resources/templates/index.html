@@ -109,13 +109,12 @@
 
         </div>
     </div>
-    <table style="float: left; margin:100px;" >
+    <table style="float: right;" >
         <tr>
-            <td><img src="images/car.png" width="500" height="500"  onclick="window.location.href='http://google.pl'" style="cursor:pointer"></td>
-            <td><img src="images/spa.png" width="500" height="500" onclick="window.location.href='http://google.pl'" style="cursor:pointer"></td>
+            <td><a th:href="@{/choiceService(category=${'Haircut'},categories=${categories})}"><img src="images/car.png" width="500" height="500" ></a></td>	<td><a th:href="@{/choiceService(category=${'Massage'},categories=${categories})}"><img src="images/spa.png" width="500" height="500"></a></td>
         </tr>
         <tr>
-            <td><img src="images/hairstyle.png" width="500" height="500"></td>	<td><img src="images/dentist.png" width="500" height="500"></td>
+            <td><a th:href="@{/choiceService(category=${'Haircut'},categories=${categories})}"><img src="images/hairstyle.png" width="500" height="500"></a></td>	<td><a th:href="@{/choiceService(category=${'Dentist'},categories=${categories})}"><img src="images/dentist.png" width="500" height="500"></a></td>
         </tr>
     </table>
 </div>
