@@ -86,7 +86,11 @@
             </table>
         </div>
     </div>
-
+<div class="container">
+    <div  th:if="${#lists.isEmpty(timetable)}">
+        <h2>This company doesn't have any booked services!</h2>
+    </div>
+</div>
 
 
 
