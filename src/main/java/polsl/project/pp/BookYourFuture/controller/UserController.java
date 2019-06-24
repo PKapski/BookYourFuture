@@ -131,12 +131,34 @@ public class UserController {
         return "choiceService";
     }
 
-    @GetMapping("/bookService/{service_id}")
+    @GetMapping("/bookedServices/{service_id}")
     public String bookService(Model model, @PathVariable(value = "service_id") int service_id) {
         model.addAttribute("service_id", service_id);
         model.addAttribute("error", false);
         model.addAttribute("categories", categories);
         return "bookService";
+    }
+
+    @GetMapping("/bookedServices")
+    public String bookedServices(Model model, @RequestParam(name = "id") int id) {
+        //System.out.println("edit"+id);
+        model.addAttribute("company_id", id);
+        Company company = companyService.findById(id);
+        List<Service> services = companyService.getServices(company);
+        model.addAttribute("company", company);
+        List<Timetable> timetableList = new ArrayList<>();
+        for(int i =0;i<services.size();i++)
+        {
+            List<Timetable> timetableBuffer = timetableService.findByService(services.get(i));
+            for(int j=0;j<timetableBuffer.size();j++)
+            {
+                timetableList.add(timetableBuffer.get(j));
+            }
+        }
+
+        model.addAttribute("timetable", timetableList);
+        model.addAttribute("errorText", "");
+        return "bookedServices";
     }
 
     //helpful class for storing possible dates of a given service
