@@ -155,11 +155,61 @@ public class UserController {
                 timetableList.add(timetableBuffer.get(j));
             }
         }
+        for(int i=timetableList.size();i>0;i--)
+        {
+            for(int j =0;j<i-1;j++)
+            {
+                String dateA[] = timetableList.get(j).getDate().split("-");
+                String startTimeA[] = timetableList.get(j).getStartTime().split(":");
+                String dateB[] = timetableList.get(j+1).getDate().split("-");
+                String startTimeB[] = timetableList.get(j+1).getStartTime().split(":");
+                if(Integer.parseInt(dateA[0])>Integer.parseInt(dateB[0]))
+                {
+                    Timetable buffer = timetableList.set(j,timetableList.get(j+1));
+                    timetableList.set(j+1,buffer);
+                }
+                else if(Integer.parseInt(dateA[0])==Integer.parseInt(dateB[0]))
+                {
+                    if(Integer.parseInt(dateA[1])>Integer.parseInt(dateB[1]))
+                    {
+                        Timetable buffer = timetableList.set(j,timetableList.get(j+1));
+                        timetableList.set(j+1,buffer);
+                    }
+                    else if(Integer.parseInt(dateA[1])==Integer.parseInt(dateB[1]))
+                    {
+                        if(Integer.parseInt(dateA[2])>Integer.parseInt(dateB[2]))
+                        {
+                            Timetable buffer = timetableList.set(j,timetableList.get(j+1));
+                            timetableList.set(j+1,buffer);
+                        }
+                        else if(Integer.parseInt(dateA[2])==Integer.parseInt(dateB[2]))
+                        {
+                            if(Integer.parseInt(startTimeA[0])>Integer.parseInt(startTimeB[0]))
+                            {
+                                Timetable buffer = timetableList.set(j,timetableList.get(j+1));
+                                timetableList.set(j+1,buffer);
+                            }
+                            else if(Integer.parseInt(startTimeA[0])==Integer.parseInt(startTimeB[0]))
+                            {
+                                if(Integer.parseInt(startTimeA[1])>Integer.parseInt(startTimeB[1]))
+                                {
+                                    Timetable buffer = timetableList.set(j,timetableList.get(j+1));
+                                    timetableList.set(j+1,buffer);
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+
 
         model.addAttribute("timetable", timetableList);
         model.addAttribute("errorText", "");
         return "bookedServices";
     }
+
 
     //helpful class for storing possible dates of a given service
     class ServiceTime {
