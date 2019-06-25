@@ -71,6 +71,8 @@
                     <th>Name services</th>
                     <th>First Name</th>
                     <th>Last Name</th>
+                    <th>Phone number</th>
+
 
 
                 </tr>
@@ -81,6 +83,8 @@
                     <td th:text="${timetable1.getServices().getName()}"></td>
                     <td th:text="${timetable1.getUser().getFirstName()}"></td>
                     <td th:text="${timetable1.getUser().getLastName()}"></td>
+                    <td th:text="${timetable1.getUser().getPhone()}"></td>
+
                 </tr>
 
             </table>
