@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="0.0" y="812.0">polsl.project.pp.BookYourFuture.entities.User</node>
+    <node x="224.0" y="226.0">polsl.project.pp.BookYourFuture.services.classes.ServiceServiceImpl</node>
+    <node x="609.0" y="298.0">polsl.project.pp.BookYourFuture.dao.interfaces.CompanyDAO</node>
+    <node x="595.0" y="375.0">polsl.project.pp.BookYourFuture.dao.classes.CompanyDAOImpl</node>
+    <node x="14.0" y="149.0">polsl.project.pp.BookYourFuture.services.interfaces.CategoryService</node>
+    <node x="203.0" y="375.0">polsl.project.pp.BookYourFuture.dao.classes.CategoryDAOImpl</node>
+    <node x="273.0" y="77.0">polsl.project.pp.BookYourFuture.dao.classes.ServiceCategoryDAOImpl</node>
+    <node x="413.0" y="298.0">polsl.project.pp.BookYourFuture.services.interfaces.UserService</node>
+    <node x="0.0" y="740.0">polsl.project.pp.BookYourFuture.config.WebConfig</node>
+    <node x="455.0" y="740.0">polsl.project.pp.BookYourFuture.entities.Service</node>
+    <node x="623.0" y="668.0">polsl.project.pp.BookYourFuture.controller.UserController</node>
+    <node x="14.0" y="0.0">polsl.project.pp.BookYourFuture.services.interfaces.ServiceCategoryService</node>
+    <node x="203.0" y="447.0">polsl.project.pp.BookYourFuture.dao.interfaces.UserDAO</node>
+    <node x="14.0" y="298.0">polsl.project.pp.BookYourFuture.dao.interfaces.TimetableDAO</node>
+    <node x="154.0" y="740.0">polsl.project.pp.BookYourFuture.entities.Timetable</node>
+    <node x="238.0" y="149.0">polsl.project.pp.BookYourFuture.services.interfaces.ServiceService</node>
+    <node x="0.0" y="596.0">polsl.project.pp.BookYourFuture.config.MvcWebApplicationInitializer</node>
+    <node x="595.0" y="740.0">polsl.project.pp.BookYourFuture.entities.Company</node>
+    <node x="217.0" y="298.0">polsl.project.pp.BookYourFuture.dao.interfaces.CategoryDAO</node>
+    <node x="399.0" y="375.0">polsl.project.pp.BookYourFuture.services.classes.UserServiceImpl</node>
+    <node x="287.0" y="0.0">polsl.project.pp.BookYourFuture.dao.interfaces.ServiceCategoryDAO</node>
+    <node x="0.0" y="226.0">polsl.project.pp.BookYourFuture.services.classes.CategoryServiceImpl</node>
+    <node x="0.0" y="668.0">polsl.project.pp.BookYourFuture.rest.UserRestController</node>
+    <node x="441.0" y="226.0">polsl.project.pp.BookYourFuture.services.classes.CompanyServiceImpl</node>
+    <node x="14.0" y="447.0">polsl.project.pp.BookYourFuture.dao.interfaces.ServiceDAO</node>
+    <node x="0.0" y="524.0">polsl.project.pp.BookYourFuture.dao.classes.ServiceDAOImpl</node>
+    <node x="189.0" y="524.0">polsl.project.pp.BookYourFuture.dao.classes.UserDAOImpl</node>
+    <node x="518.0" y="77.0">polsl.project.pp.BookYourFuture.services.classes.TimetableServiceImpl</node>
+    <node x="0.0" y="77.0">polsl.project.pp.BookYourFuture.services.classes.ServiceCategoryServiceImpl</node>
+    <node x="427.0" y="668.0">polsl.project.pp.BookYourFuture.entities.ServiceCategory</node>
+    <node x="217.0" y="668.0">polsl.project.pp.BookYourFuture.config.WebSecurityConfig</node>
+    <node x="287.0" y="596.0">polsl.project.pp.BookYourFuture.BookYourFutureApplication</node>
+    <node x="553.0" y="596.0">polsl.project.pp.BookYourFuture.rest.CompanyRestController</node>
+    <node x="357.0" y="447.0">polsl.project.pp.BookYourFuture.config.SecurityWebApplicationInitializer</node>
+    <node x="532.0" y="0.0">polsl.project.pp.BookYourFuture.services.interfaces.TimetableService</node>
+    <node x="0.0" y="375.0">polsl.project.pp.BookYourFuture.dao.classes.TimetableDAOImpl</node>
+    <node x="455.0" y="149.0">polsl.project.pp.BookYourFuture.services.interfaces.CompanyService</node>
+    <node x="308.0" y="740.0">polsl.project.pp.BookYourFuture.entities.Category</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="polsl.project.pp.BookYourFuture.dao.classes.ServiceCategoryDAOImpl" target="polsl.project.pp.BookYourFuture.dao.interfaces.ServiceCategoryDAO">
+      <point x="0.0" y="-13.5" />
+      <point x="0.0" y="13.5" />
+    </edge>
+    <edge source="polsl.project.pp.BookYourFuture.services.classes.ServiceServiceImpl" target="polsl.project.pp.BookYourFuture.services.interfaces.ServiceService">
+      <point x="0.0" y="-13.5" />
+      <point x="0.0" y="13.5" />
+    </edge>
+    <edge source="polsl.project.pp.BookYourFuture.services.classes.TimetableServiceImpl" target="polsl.project.pp.BookYourFuture.services.interfaces.TimetableService">
+      <point x="0.0" y="-13.5" />
+      <point x="0.0" y="13.5" />
+    </edge>
+    <edge source="polsl.project.pp.BookYourFuture.dao.classes.CategoryDAOImpl" target="polsl.project.pp.BookYourFuture.dao.interfaces.CategoryDAO">
+      <point x="0.0" y="-13.5" />
+      <point x="0.0" y="13.5" />
+    </edge>
+    <edge source="polsl.project.pp.BookYourFuture.dao.classes.ServiceDAOImpl" target="polsl.project.pp.BookYourFuture.dao.interfaces.ServiceDAO">
+      <point x="0.0" y="-13.5" />
+      <point x="0.0" y="13.5" />
+    </edge>
+    <edge source="polsl.project.pp.BookYourFuture.services.classes.CategoryServiceImpl" target="polsl.project.pp.BookYourFuture.services.interfaces.CategoryService">
+      <point x="0.0" y="-13.5" />
+      <point x="0.0" y="13.5" />
+    </edge>
+    <edge source="polsl.project.pp.BookYourFuture.services.classes.CompanyServiceImpl" target="polsl.project.pp.BookYourFuture.services.interfaces.CompanyService">
+      <point x="0.0" y="-13.5" />
+      <point x="0.0" y="13.5" />
+    </edge>
+    <edge source="polsl.project.pp.BookYourFuture.dao.classes.TimetableDAOImpl" target="polsl.project.pp.BookYourFuture.dao.interfaces.TimetableDAO">
+      <point x="0.0" y="-13.5" />
+      <point x="0.0" y="13.5" />
+    </edge>
+    <edge source="polsl.project.pp.BookYourFuture.dao.classes.UserDAOImpl" target="polsl.project.pp.BookYourFuture.dao.interfaces.UserDAO">
+      <point x="0.0" y="-13.5" />
+      <point x="0.0" y="13.5" />
+    </edge>
+    <edge source="polsl.project.pp.BookYourFuture.services.classes.UserServiceImpl" target="polsl.project.pp.BookYourFuture.services.interfaces.UserService">
+      <point x="0.0" y="-13.5" />
+      <point x="0.0" y="13.5" />
+    </edge>
+    <edge source="polsl.project.pp.BookYourFuture.dao.classes.CompanyDAOImpl" target="polsl.project.pp.BookYourFuture.dao.interfaces.CompanyDAO">
+      <point x="0.0" y="-13.5" />
+      <point x="0.0" y="13.5" />
+    </edge>
+    <edge source="polsl.project.pp.BookYourFuture.services.classes.ServiceCategoryServiceImpl" target="polsl.project.pp.BookYourFuture.services.interfaces.ServiceCategoryService">
+      <point x="0.0" y="-13.5" />
+      <point x="0.0" y="13.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.4980966325036603" x="1002.0" y="525.0" />
+  <SelectedNodes>
+    <node>polsl.project.pp.BookYourFuture.entities.User</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
